@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>战场传奇 - 5V5 MOBA竞技</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #0a0a0f;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        .hero {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at center, #1a0a20 0%, #0a0a0f 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .battle-aura {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border: 3px solid rgba(138, 43, 226, 0.3);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+        .battle-aura::before {
+            content: '';
+            position: absolute;
+            inset: 50px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+        }
+        .game-logo {
+            font-size: 8em;
+            margin-bottom: 20px;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        h1 {
+            font-size: 4em;
+            background: linear-gradient(45deg, #8a2be2, #ffd700, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+        .subtitle {
+            font-size: 1.5em;
+            color: #888;
+            margin-bottom: 40px;
+        }
+        .cta-btn {
+            padding: 20px 60px;
+            background: linear-gradient(45deg, #8a2be2, #4b0082);
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 30px rgba(138, 43, 226, 0.5);
+        }
+        .cta-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 60px rgba(138, 43, 226, 0.8);
+        }
+        .heroes-showcase {
+            padding: 80px 50px;
+            background: #0f0f15;
+        }
+        .heroes-showcase h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: #ffd700;
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .hero-card {
+            background: linear-gradient(180deg, #1a1a2e, #0a0a15);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .hero-card:hover {
+            border-color: #8a2be2;
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(138, 43, 226, 0.3);
+        }
+        .hero-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8a2be2, #4b0082);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            margin: 0 auto 15px;
+        }
+        .hero-card h4 {
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .hero-role {
+            font-size: 0.8em;
+            color: #8a2be2;
+        }
+        .match-info {
+            padding: 80px 50px;
+            background: linear-gradient(180deg, #0a0a0f, #1a0a20);
+        }
+        .match-info h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+        }
+        .battle-ground {
+            max-width: 1000px;
+            height: 400px;
+            margin: 0 auto;
+            background: #1a1a2e;
+            border: 2px solid #8a2be2;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5em;
+            position: relative;
+            overflow: hidden;
+        }
+        .team-label {
+            position: absolute;
+            top: 20px;
+            font-size: 0.3em;
+            padding: 10px 30px;
+            border-radius: 20px;
+        }
+        .team-blue {
+            left: 20px;
+            background: rgba(0, 0, 255, 0.3);
+            color: #4da6ff;
+        }
+        .team-red {
+            right: 20px;
+            background: rgba(255, 0, 0, 0.3);
+            color: #ff4d4d;
+        }
+        .footer {
+            padding: 60px;
+            text-align: center;
+            background: #050510;
+        }
+        .play-now {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .play-btn {
+            padding: 15px 40px;
+            border: 2px solid #ffd700;
+            color: #ffd700;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1em;
+        }
+        .play-btn:hover {
+            background: #ffd700;
+            color: #0a0a0f;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="battle-aura"></div>
+        <div class="hero-content">
+            <div class="game-logo">⚔️</div>
+            <h1>战场传奇</h1>
+            <p class="subtitle">5V5公平竞技，展现你的操作与策略</p>
+            <button class="cta-btn">🎮 立即对战</button>
+        </div>
+    </section>
+
+    <section class="heroes-showcase">
+        <h2>🏆 传奇英雄</h2>
+        <div class="hero-grid">
+            <div class="hero-card">
+                <div class="hero-avatar">🧙</div>
+                <h4>雷霆法神</h4>
+                <span class="hero-role">法师</span>
+            </div>
+            <div class="hero-card">
+                <div class="hero-avatar">⚔️</div>
+                <h4>无双剑圣</h4>
+                <span class="hero-role">战士</span>
+            </div>
+            <div class="hero-card">
+                <div class="hero-avatar">🏹</div>
+                <h4>暗影猎手</h4>
+                <span class="hero-role">刺客</span>
+            </div>
+            <div class="hero-card">
+                <div class="hero-avatar">🛡️</div>
+                <h4>钢铁守护</h4>
+                <span class="hero-role">坦克</span>
+            </div>
+            <div class="hero-card">
+                <div class="hero-avatar">💉</div>
+                <h4>圣光医者</h4>
+                <span class="hero-role">辅助</span>
+            </div>
+            <div class="hero-card">
+                <div class="hero-avatar">🔫</div>
+                <h4>末日枪手</h4>
+                <span class="hero-role">射手</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="match-info">
+        <h2>⚔️ 对战战场</h2>
+        <div class="battle-ground">
+            <span class="team-label team-blue">蓝方: 你的队伍</span>
+            🏰
+            <span class="team-label team-red">红方: 敌方队伍</span>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <h2 style="font-size: 2em; color: #8a2be2;">天梯排名等你来战</h2>
+        <div class="play-now">
+            <span class="play-btn">PC下载</span>
+            <span class="play-btn">手机版</span>
+            <span class="play-btn">主机版</span>
+        </div>
+    </footer>
+</body>
+</html>

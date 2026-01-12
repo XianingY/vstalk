@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>华为 HUAWEI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=HarmonyOS+Sans:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['HarmonyOS Sans', 'Noto Sans SC', 'sans-serif'],
+                    },
+                    colors: {
+                        huawei: {
+                            red: '#CF0A2C',
+                            dark: '#1F1F1F',
+                            gold: '#C9A66B',
+                            light: '#F5F5F5',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-out forwards',
+                        'slide-up': 'slideUp 1s ease-out forwards',
+                        'float': 'float 4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideUp: { '0%': { opacity: '0', transform: 'translateY(40px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-15px)' } }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-bg { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
+        .gold-gradient { background: linear-gradient(135deg, #C9A66B 0%, #F4E4BA 50%, #C9A66B 100%); }
+        .premium-card { background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%); backdrop-filter: blur(10px); border: 1px solid rgba(201, 166, 107, 0.2); }
+        .elegant-shadow { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+    </style>
+</head>
+<body class="font-sans bg-[#1a1a1a] text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-[rgba(26,26,26,0.9)] backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-8">
+                <a href="#" class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-huawei-red rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">H</span>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="#" class="text-sm text-gray-300 hover:text-white transition-colors">手机</a>
+                    <a href="#" class="text-sm text-gray-300 hover:text-white transition-colors">平板</a>
+                    <a href="#" class="text-sm text-gray-300 hover:text-white transition-colors">笔记本</a>
+                    <a href="#" class="text-sm text-gray-300 hover:text-white transition-colors">穿戴</a>
+                    <a href="#" class="text-sm text-gray-300 hover:text-white transition-colors">智能家居</a>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="text-gray-300 hover:text-white">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </a>
+                <a href="#" class="text-gray-300 hover:text-white md:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section - Mate 70 -->
+    <section class="hero-bg min-h-screen flex items-center justify-center pt-16 overflow-hidden relative">
+        <div class="absolute inset-0">
+            <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-huawei-red/10 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-huawei-gold/10 rounded-full blur-3xl"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 relative z-10 text-center w-full">
+            <div class="animate-fade-in">
+                <h2 class="text-huawei-gold text-lg mb-4 tracking-widest uppercase">全新发布</h2>
+                <h1 class="text-5xl md:text-7xl font-bold mb-6">HUAWEI Mate 70 Pro</h1>
+                <p class="text-xl text-gray-300 mb-12">致敬 Mate，跨越想象</p>
+            </div>
+            <div class="animate-slide-up" style="animation-delay: 0.3s;">
+                <div class="flex flex-col md:flex-row items-center justify-center gap-6 mb-12">
+                    <a href="#" class="px-8 py-3 bg-huawei-red text-white font-medium rounded-full hover:bg-red-700 transition-colors">立即预订</a>
+                    <a href="#" class="px-8 py-3 bg-transparent border border-white/30 text-white font-medium rounded-full hover:bg-white/10 transition-colors">了解更多</a>
+                </div>
+            </div>
+            <div class="animate-slide-up" style="animation-delay: 0.5s;">
+                <div class="w-80 h-[520px] mx-auto rounded-[3rem] bg-gradient-to-b from-gray-800 to-gray-900 elegant-shadow flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-red-900/30 via-transparent to-gold-900/20"></div>
+                    <div class="relative z-10 text-center">
+                        <div class="text-8xl mb-4 animate-float">📱</div>
+                        <div class="gold-gradient bg-clip-text text-transparent text-2xl font-bold mb-2">XMAGE</div>
+                        <p class="text-gray-400 text-sm">超光变影像</p>
+                    </div>
+                    <div class="absolute top-5 left-1/2 -translate-x-1/2 w-20 h-6 bg-black rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-24 bg-[#1a1a1a]">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">卓越品质，非凡体验</h2>
+                <p class="text-gray-400">创新科技，匠心之作</p>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="premium-card rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 group">
+                    <div class="w-14 h-14 mb-6 bg-gradient-to-br from-huawei-red to-red-700 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">XMAGE 影像</h3>
+                    <p class="text-gray-400 text-sm">超光变摄像头，捕捉每一个精彩瞬间。</p>
+                </div>
+                <div class="premium-card rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 group">
+                    <div class="w-14 h-14 mb-6 bg-gradient-to-br from-huawei-gold to-yellow-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">强劲性能</h3>
+                    <p class="text-gray-400 text-sm">新一代处理器，性能卓越，功耗更低。</p>
+                </div>
+                <div class="premium-card rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 group">
+                    <div class="w-14 h-14 mb-6 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">卫星通信</h3>
+                    <p class="text-gray-400 text-sm">支持卫星消息，通信无界，安心无忧。</p>
+                </div>
+                <div class="premium-card rounded-2xl p-8 hover:bg-white/10 transition-all duration-300 group">
+                    <div class="w-14 h-14 mb-6 bg-gradient-to-br from-green-600 to-green-800 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">隐私安全</h3>
+                    <p class="text-gray-400 text-sm">全方位安全防护，保护你的数据安全。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Showcase -->
+    <section class="py-24 bg-gradient-to-b from-[#1a1a1a] to-[#0d0d0d]">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">全场景智慧生活</h2>
+                <p class="text-gray-400">构建万物互联的智能世界</p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="relative group cursor-pointer">
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl p-8 min-h-[450px] flex flex-col justify-between overflow-hidden">
+                        <div class="relative z-10">
+                            <h3 class="text-2xl font-bold mb-2">Pura 70 系列</h3>
+                            <p class="text-gray-400">影像美学，先锋设计</p>
+                        </div>
+                        <div class="text-center mt-8">
+                            <div class="text-8xl transform group-hover:scale-110 transition-transform duration-500">📱</div>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-huawei-red/30 to-transparent transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            <a href="#" class="text-huawei-gold font-medium">了解更多 →</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative group cursor-pointer">
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl p-8 min-h-[450px] flex flex-col justify-between overflow-hidden">
+                        <div class="relative z-10">
+                            <h3 class="text-2xl font-bold mb-2">MatePad Pro</h3>
+                            <p class="text-gray-400">专业生产力平板</p>
+                        </div>
+                        <div class="text-center mt-8">
+                            <div class="text-8xl transform group-hover:scale-110 transition-transform duration-500">📱</div>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-huawei-gold/30 to-transparent transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            <a href="#" class="text-huawei-gold font-medium">了解更多 →</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative group cursor-pointer">
+                    <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl p-8 min-h-[450px] flex flex-col justify-between overflow-hidden">
+                        <div class="relative z-10">
+                            <h3 class="text-2xl font-bold mb-2">Watch GT</h3>
+                            <p class="text-gray-400">超长续航，智慧健康</p>
+                        </div>
+                        <div class="text-center mt-8">
+                            <div class="text-8xl transform group-hover:scale-110 transition-transform duration-500">⌚</div>
+                        </div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-blue-900/30 to-transparent transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                            <a href="#" class="text-huawei-gold font-medium">了解更多 →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EMUI Section -->
+    <section class="py-24 bg-[#1a1a1a]">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">HarmonyOS NEXT</h2>
+                    <p class="text-gray-400 text-lg mb-8">一个系统，统一所有设备体验。跨设备协同，让生活更便捷。</p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <svg class="w-6 h-6 text-huawei-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            跨设备无缝流转
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <svg class="w-6 h-6 text-huawei-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            隐私安全保护
+                        </li>
+                        <li class="flex items-center gap-3 text-gray-300">
+                            <svg class="w-6 h-6 text-huawei-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            流畅操作体验
+                        </li>
+                    </ul>
+                    <a href="#" class="inline-flex items-center gap-2 px-6 py-3 bg-huawei-red text-white rounded-full hover:bg-red-700 transition-colors">
+                        了解更多
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+                <div class="text-center">
+                    <div class="w-64 h-[450px] mx-auto rounded-[2.5rem] bg-gradient-to-b from-gray-700 to-gray-800 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-8xl mb-4">📲</div>
+                            <p class="text-gray-400">HarmonyOS</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#0d0d0d] py-16">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <h4 class="font-bold mb-4">产品</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white">智能手机</a></li>
+                        <li><a href="#" class="hover:text-white">平板电脑</a></li>
+                        <li><a href="#" class="hover:text-white">笔记本电脑</a></li>
+                        <li><a href="#" class="hover:text-white">智能穿戴</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">服务支持</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white">售后服务</a></li>
+                        <li><a href="#" class="hover:text-white">保修政策</a></li>
+                        <li><a href="#" class="hover:text-white">查找门店</a></li>
+                        <li><a href="#" class="hover:text-white">客服热线</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">关于华为</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white">公司介绍</a></li>
+                        <li><a href="#" class="hover:text-white">新闻动态</a></li>
+                        <li><a href="#" class="hover:text-white">社会责任</a></li>
+                        <li><a href="#" class="hover:text-white">加入华为</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">关注我们</h4>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-huawei-red transition-colors">
+                            <span class="text-lg">微</span>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-huawei-red transition-colors">
+                            <span class="text-lg">博</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-white/10 pt-8 flex flex-wrap items-center justify-between gap-4 text-sm text-gray-500">
+                <p>© 2025 华为技术有限公司。保留所有权利。</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-white">隐私政策</a>
+                    <a href="#" class="hover:text-white">使用条款</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>梦幻庄园 - 温馨农场经营</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            background: #f5f0e6;
+            color: #5d4e37;
+            overflow-x: hidden;
+        }
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #87ceeb 0%, #98d982 50%, #7cb342 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .clouds {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 40%;
+            overflow: hidden;
+        }
+        .cloud {
+            position: absolute;
+            font-size: 4em;
+            animation: cloudFloat 20s linear infinite;
+            opacity: 0.8;
+        }
+        @keyframes cloudFloat {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(calc(100vw + 100px)); }
+        }
+        .sun {
+            position: absolute;
+            top: 10%;
+            right: 15%;
+            font-size: 8em;
+            animation: sunGlow 4s ease-in-out infinite;
+        }
+        @keyframes sunGlow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .farm-scene {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+        .farm-logo {
+            font-size: 6em;
+            margin-bottom: 20px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        h1 {
+            font-size: 3.5em;
+            color: #5d4e37;
+            text-shadow: 3px 3px 0 #fff;
+            margin-bottom: 15px;
+        }
+        .subtitle {
+            font-size: 1.3em;
+            color: #7cb342;
+            margin-bottom: 30px;
+        }
+        .cta-btn {
+            padding: 18px 50px;
+            background: #ff9800;
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 152, 0, 0.4);
+            transition: all 0.3s;
+        }
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 152, 0, 0.5);
+        }
+        .features {
+            padding: 80px 50px;
+            background: #f5f0e6;
+        }
+        .features h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: #5d4e37;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        .feature-icon {
+            font-size: 3.5em;
+            margin-bottom: 15px;
+        }
+        .feature-card h3 {
+            color: #5d4e37;
+            margin-bottom: 10px;
+        }
+        .feature-card p {
+            color: #888;
+            font-size: 0.9em;
+        }
+        .crops-showcase {
+            padding: 80px 50px;
+            background: linear-gradient(180deg, #7cb342, #98d982);
+        }
+        .crops-showcase h2 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #fff;
+            margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .crops-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .crop-item {
+            background: rgba(255,255,255,0.3);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .crop-item:hover {
+            background: rgba(255,255,255,0.5);
+            transform: scale(1.1);
+        }
+        .crop-icon {
+            font-size: 3em;
+        }
+        .crop-name {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #5d4e37;
+        }
+        .season-calendar {
+            padding: 80px 50px;
+            background: #f5f0e6;
+        }
+        .season-calendar h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 40px;
+        }
+        .seasons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .season {
+            flex: 1;
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            border: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        .season:hover {
+            border-color: #ff9800;
+        }
+        .season-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        .season h3 {
+            color: #5d4e37;
+        }
+        .footer {
+            padding: 60px;
+            text-align: center;
+            background: #5d4e37;
+        }
+        .footer h2 {
+            color: #fff;
+            margin-bottom: 30px;
+        }
+        .download-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .download-btn {
+            padding: 15px 35px;
+            background: #fff;
+            color: #5d4e37;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .download-btn:hover {
+            background: #ff9800;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="clouds">
+            <span class="cloud" style="top:10%;animation-delay:0s">☁️</span>
+            <span class="cloud" style="top:25%;animation-delay:5s">☁️</span>
+            <span class="cloud" style="top:5%;animation-delay:10s">☁️</span>
+        </div>
+        <div class="sun">☀️</div>
+        <div class="farm-scene">
+            <div class="farm-logo">🌻</div>
+            <h1>梦幻庄园</h1>
+            <p class="subtitle">播种希望，收获幸福</p>
+            <button class="cta-btn">🌱 开始农场生活</button>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2>游戏特色</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🌾</div>
+                <h3>种植作物</h3>
+                <p>几十种作物等你耕耘，四季轮作各有不同</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🐄</div>
+                <h3>饲养动物</h3>
+                <p>可爱的奶牛、鸡鸭，还有忠诚的牧羊犬</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏠</div>
+                <h3>建造庄园</h3>
+                <p>diy你的农场，从小屋到豪华别墅</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👨‍🌾</div>
+                <h3>社交互动</h3>
+                <p>拜访好友的农场，交换珍贵的礼物</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="crops-showcase">
+        <h2>丰富作物</h2>
+        <div class="crops-grid">
+            <div class="crop-item">
+                <div class="crop-icon">🍅</div>
+                <div class="crop-name">番茄</div>
+            </div>
+            <div class="crop-item">
+                <div class="crop-icon">🥕</div>
+                <div class="crop-name">胡萝卜</div>
+            </div>
+            <div class="crop-item">
+                <div class="crop-icon">🌽</div>
+                <div class="crop-name">玉米</div>
+            </div>
+            <div class="crop-item">
+                <div class="crop-icon">🍆</div>
+                <div class="crop-name">茄子</div>
+            </div>
+            <div class="crop-item">
+                <div class="crop-icon">🥬</div>
+                <div class="crop-name">白菜</div>
+            </div>
+            <div class="crop-item">
+                <div class="crop-icon">🍓</div>
+                <div class="crop-name">草莓</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="season-calendar">
+        <h2>四季轮换</h2>
+        <div class="seasons">
+            <div class="season">
+                <div class="season-icon">🌸</div>
+                <h3>春季</h3>
+                <p>草莓、卷心菜</p>
+            </div>
+            <div class="season">
+                <div class="season-icon">☀️</div>
+                <h3>夏季</h3>
+                <p>番茄、玉米、向日葵</p>
+            </div>
+            <div class="season">
+                <div class="season-icon">🍂</div>
+                <h3>秋季</h3>
+                <p>南瓜、苹果、葡萄</p>
+            </div>
+            <div class="season">
+                <div class="season-icon">❄️</div>
+                <h3>冬季</h3>
+                <p>温室种植、雪人活动</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <h2>🌾 开启你的农场梦想 🌾</h2>
+        <div class="download-options">
+            <button class="download-btn">iOS</button>
+            <button class="download-btn">Android</button>
+            <button class="download-btn">Steam</button>
+            <button class="download-btn">Switch</button>
+        </div>
+    </footer>
+</body>
+</html>

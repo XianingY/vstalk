@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>极速恶魔 - 街头竞速巅峰</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Arial Black', sans-serif;
+            background: #0d0d0d;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #1a0000, #000);
+            position: relative;
+            overflow: hidden;
+        }
+        .speed-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background:
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 100px,
+                    rgba(255, 0, 0, 0.1) 100px,
+                    rgba(255, 0, 0, 0.1) 200px
+                );
+            animation: speedMove 0.5s linear infinite;
+        }
+        @keyframes speedMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-200px); }
+        }
+        .car-silhouette {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 15em;
+            animation: carVibrate 0.1s infinite;
+        }
+        @keyframes carVibrate {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-2px); }
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding-top: 20vh;
+        }
+        h1 {
+            font-size: 7em;
+            background: linear-gradient(45deg, #ff0000, #ff6b00, #ff0000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            animation: titleGlow 2s infinite;
+        }
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 20px #ff0000); }
+            50% { filter: drop-shadow(0 0 40px #ff6b00); }
+        }
+        .speed-meter {
+            font-size: 2em;
+            color: #00ff00;
+            margin: 30px 0;
+            font-family: 'Courier New', monospace;
+        }
+        .cta-btn {
+            padding: 25px 80px;
+            background: linear-gradient(45deg, #ff0000, #ff6b00);
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            transition: all 0.3s;
+        }
+        .cta-btn:hover {
+            transform: scale(1.1) skewX(-5deg);
+            box-shadow: 0 0 50px #ff0000;
+        }
+        .tracks {
+            padding: 80px 50px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .track-card {
+            background: linear-gradient(180deg, #222, #111);
+            border: 2px solid #333;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .track-card:hover {
+            border-color: #ff0000;
+            transform: translateY(-10px);
+        }
+        .track-preview {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+        }
+        .track-info {
+            padding: 20px;
+            text-align: center;
+        }
+        .track-info h3 {
+            color: #ff6b00;
+            margin-bottom: 10px;
+        }
+        .track-info p {
+            color: #666;
+            font-size: 0.9em;
+        }
+        .leaderboard {
+            padding: 80px 50px;
+            background: #111;
+        }
+        .leaderboard h2 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #ffd700;
+            margin-bottom: 40px;
+        }
+        .racer-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .racer {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: #1a1a1a;
+            margin-bottom: 10px;
+            border-left: 5px solid #ff0000;
+        }
+        .racer-rank {
+            font-size: 2em;
+            font-weight: bold;
+            width: 60px;
+            color: #ffd700;
+        }
+        .racer-name {
+            flex: 1;
+            font-size: 1.3em;
+        }
+        .racer-time {
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+        }
+        .footer {
+            padding: 60px;
+            text-align: center;
+            background: #050505;
+        }
+        .download-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .download-opt {
+            padding: 15px 40px;
+            border: 2px solid #ff0000;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .download-opt:hover {
+            background: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="speed-lines"></div>
+        <div class="car-silhouette">🏎️</div>
+        <div class="hero-content">
+            <h1>极速恶魔</h1>
+            <div class="speed-meter">⚡ 极速: 0 - 300 KM/H ⚡</div>
+            <button class="cta-btn">🏁 立即飙车</button>
+        </div>
+    </section>
+
+    <section class="tracks">
+        <div class="track-card">
+            <div class="track-preview" style="background: linear-gradient(45deg, #1a1a1a, #333)">🌃</div>
+            <div class="track-info">
+                <h3>霓虹都市</h3>
+                <p>夜间赛道 | 8.5公里</p>
+            </div>
+        </div>
+        <div class="track-card">
+            <div class="track-preview" style="background: linear-gradient(45deg, #2d5016, #1a3a0a)">🏔️</div>
+            <div class="track-info">
+                <h3>悬崖山路</h3>
+                <p>山地赛道 | 12.3公里</p>
+            </div>
+        </div>
+        <div class="track-card">
+            <div class="track-preview" style="background: linear-gradient(45deg, #501616, #3a0a0a)">🌋</div>
+            <div class="track-info">
+                <h3>火山荒原</h3>
+                <p>特殊赛道 | 15.7公里</p>
+            </div>
+        </div>
+        <div class="track-card">
+            <div class="track-preview" style="background: linear-gradient(45deg, #0a3a3a, #0a2020)">🌊</div>
+            <div class="track-info">
+                <h3>沿海公路</h3>
+                <p>海岸赛道 | 9.2公里</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="leaderboard">
+        <h2>🏆 传奇车手榜</h2>
+        <div class="racer-list">
+            <div class="racer">
+                <span class="racer-rank">🥇</span>
+                <span class="racer-name">闪电小子</span>
+                <span class="racer-time">02:15.432</span>
+            </div>
+            <div class="racer">
+                <span class="racer-rank">🥈</span>
+                <span class="racer-name">黑夜骑士</span>
+                <span class="racer-time">02:16.891</span>
+            </div>
+            <div class="racer">
+                <span class="racer-rank">🥉</span>
+                <span class="racer-name">极速狂人</span>
+                <span class="racer-time">02:18.234</span>
+            </div>
+            <div class="racer">
+                <span class="racer-rank">4</span>
+                <span class="racer-name">弯道之王</span>
+                <span class="racer-time">02:19.567</span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <h2 style="font-size: 2em; color: #ff0000;">引擎已启动，就等你来</h2>
+        <div class="download-grid">
+            <span class="download-opt">Steam</span>
+            <span class="download-opt">Epic</span>
+            <span class="download-opt">PS5</span>
+            <span class="download-opt">Xbox</span>
+        </div>
+    </footer>
+</body>
+</html>

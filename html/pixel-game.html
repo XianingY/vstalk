@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>像素冒险 - Pixel Adventure</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        pixel: ['Press Start 2P', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        * {
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+
+        body {
+            background: #1a1a2e;
+            min-height: 100vh;
+        }
+
+        #gameCanvas {
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            border: 4px solid #4a4a6a;
+            box-shadow: 0 0 30px rgba(100, 100, 200, 0.3);
+        }
+
+        .pixel-btn {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 10px;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            transition: transform 0.1s;
+        }
+
+        .pixel-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .pixel-btn:active {
+            transform: scale(0.95);
+        }
+
+        .game-container {
+            background: linear-gradient(180deg, #16213e 0%, #1a1a2e 100%);
+        }
+
+        .pixel-star {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            animation: twinkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.5); }
+        }
+    </style>
+</head>
+<body class="game-container min-h-screen flex flex-col items-center justify-center p-4">
+    <div id="stars" class="fixed inset-0 pointer-events-none overflow-hidden"></div>
+
+    <div class="text-center mb-4">
+        <h1 class="font-pixel text-2xl text-yellow-400 mb-2" style="text-shadow: 4px 4px 0 #ff6b35;">
+            像素冒险
+        </h1>
+        <p class="font-pixel text-xs text-gray-400">PIXEL ADVENTURE</p>
+    </div>
+
+    <div class="relative">
+        <canvas id="gameCanvas" width="640" height="480" class="bg-black rounded-lg"></canvas>
+
+        <div id="startScreen" class="absolute inset-0 bg-black/90 flex flex-col items-center justify-center z-10">
+            <div class="text-center">
+                <div class="text-6xl mb-4">⚔️</div>
+                <h2 class="font-pixel text-xl text-yellow-400 mb-2">像素冒险</h2>
+                <p class="font-pixel text-xs text-gray-400 mb-8">收集金币，击败敌人！</p>
+
+                <div class="space-y-4 mb-8">
+                    <p class="font-pixel text-xs text-gray-500">操作说明</p>
+                    <div class="flex gap-4 justify-center text-gray-400 text-xs">
+                        <span>WASD / 方向键 移动</span>
+                    </div>
+                    <div class="flex gap-4 justify-center text-gray-400 text-xs">
+                        <span>空格键 攻击</span>
+                    </div>
+                </div>
+
+                <button id="startBtn" class="pixel-btn bg-green-500 text-white hover:bg-green-400 rounded shadow-lg" style="box-shadow: 0 4px 0 #2d7a32;">
+                    开始游戏
+                </button>
+            </div>
+        </div>
+
+        <div id="gameOverScreen" class="absolute inset-0 bg-black/90 hidden flex-col items-center justify-center z-10">
+            <div class="text-center">
+                <div class="text-6xl mb-4">💀</div>
+                <h2 class="font-pixel text-xl text-red-500 mb-2">游戏结束</h2>
+                <p class="font-pixel text-xs text-gray-400 mb-4">得分: <span id="finalScore" class="text-yellow-400">0</span></p>
+                <button id="restartBtn" class="pixel-btn bg-yellow-500 text-black hover:bg-yellow-400 rounded shadow-lg" style="box-shadow: 0 4px 0 #b8860b;">
+                    再来一次
+                </button>
+            </div>
+        </div>
+
+        <div id="winScreen" class="absolute inset-0 bg-black/90 hidden flex-col items-center justify-center z-10">
+            <div class="text-center">
+                <div class="text-6xl mb-4">🏆</div>
+                <h2 class="font-pixel text-xl text-yellow-400 mb-2">胜利!</h2>
+                <p class="font-pixel text-xs text-gray-400 mb-4">恭喜通关!</p>
+                <button id="playAgainBtn" class="pixel-btn bg-green-500 text-white hover:bg-green-400 rounded shadow-lg" style="box-shadow: 0 4px 0 #2d7a32;">
+                    再玩一次
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex gap-8 mt-4">
+        <div class="flex items-center gap-2">
+            <span class="text-xl">💰</span>
+            <span id="scoreDisplay" class="font-pixel text-sm text-yellow-400">0</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="text-xl">❤️</span>
+            <span id="livesDisplay" class="font-pixel text-sm text-red-400">3</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <span class="text-xl">⚔️</span>
+            <span id="killsDisplay" class="font-pixel text-sm text-purple-400">0</span>
+        </div>
+    </div>
+
+    <div class="mt-6 text-center">
+        <p class="font-pixel text-xs text-gray-500">移动: WASD / 方向键 | 攻击: 空格 | 暂停: P</p>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let gameRunning = false;
+        let score = 0;
+        let lives = 3;
+        let kills = 0;
+        let level = 1;
+        let gamePaused = false;
+
+        const player = {
+            x: 320,
+            y: 400,
+            width: 24,
+            height: 32,
+            speed: 3,
+            vx: 0,
+            vy: 0,
+            direction: 1,
+            isAttacking: false,
+            attackTimer: 0,
+            invincible: false,
+            invincibleTimer: 0
+        };
+
+        const keys = {};
+        let coins = [];
+        let enemies = [];
+        let particles = [];
+        let collectibles = [];
+
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                star.className = 'pixel-star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 1.5 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        function drawPlayer() {
+            ctx.save();
+            if (player.invincible && Math.floor(Date.now() / 100) % 2 === 0) {
+                ctx.globalAlpha = 0.5;
+            }
+            ctx.fillStyle = '#3498db';
+            ctx.fillRect(player.x + 4, player.y + 8, 16, 16);
+            ctx.fillStyle = '#fdbf6f';
+            ctx.fillRect(player.x + 4, player.y, 16, 12);
+            ctx.fillStyle = '#2c3e50';
+            if (player.direction === 1) {
+                ctx.fillRect(player.x + 12, player.y + 4, 4, 4);
+            } else {
+                ctx.fillRect(player.x + 8, player.y + 4, 4, 4);
+            }
+            ctx.fillStyle = '#2c3e50';
+            ctx.fillRect(player.x + 4, player.y + 24, 6, 8);
+            ctx.fillRect(player.x + 14, player.y + 24, 6, 8);
+            if (player.isAttacking) {
+                ctx.fillStyle = '#f1c40f';
+                const swordX = player.direction === 1 ? player.x + 20 : player.x - 8;
+                ctx.fillRect(swordX, player.y + 8, 8, 4);
+            }
+            ctx.restore();
+        }
+
+        function drawCoin(coin) {
+            const bounce = Math.sin(Date.now() / 200 + coin.x) * 2;
+            ctx.fillStyle = '#f1c40f';
+            ctx.fillRect(coin.x, coin.y + bounce, coin.width, coin.height);
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(coin.x + 2, coin.y + bounce + 2, 4, 4);
+        }
+
+        function drawEnemy(enemy) {
+            const wobble = Math.sin(Date.now() / 150 + enemy.x) * 2;
+            ctx.fillStyle = enemy.type === 'slime' ? '#9b59b6' : '#e74c3c';
+            ctx.fillRect(enemy.x, enemy.y + wobble, enemy.width, enemy.height);
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(enemy.x + 4, enemy.y + wobble + 4, 6, 6);
+            ctx.fillRect(enemy.x + 14, enemy.y + wobble + 4, 6, 6);
+            ctx.fillStyle = '#2c3e50';
+            ctx.fillRect(enemy.x + 6, enemy.y + wobble + 6, 3, 3);
+            ctx.fillRect(enemy.x + 16, enemy.y + wobble + 6, 3, 3);
+        }
+
+        function drawCollectible(item) {
+            const pulse = Math.sin(Date.now() / 200) * 2;
+            ctx.fillStyle = '#e74c3c';
+            ctx.fillRect(item.x + 4, item.y + 4 + pulse, 8, 8);
+            ctx.fillRect(item.x, item.y + 8 + pulse, 16, 4);
+            ctx.fillRect(item.x + 4, item.y + 4 + pulse, 4, 4);
+            ctx.fillRect(item.x + 8, item.y + 4 + pulse, 4, 4);
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(item.x + 2, item.y + 6 + pulse, 2, 2);
+        }
+
+        function drawParticle(particle) {
+            ctx.fillStyle = particle.color;
+            ctx.globalAlpha = particle.life / particle.maxLife;
+            ctx.fillRect(particle.x, particle.y, particle.size, particle.size);
+            ctx.globalAlpha = 1;
+        }
+
+        function createParticles(x, y, color, count) {
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 6,
+                    vy: (Math.random() - 0.5) * 6,
+                    size: Math.random() * 4 + 2,
+                    color: color,
+                    life: 30,
+                    maxLife: 30
+                });
+            }
+        }
+
+        function spawnCoin() {
+            coins.push({
+                x: Math.random() * (canvas.width - 20),
+                y: Math.random() * (canvas.height - 100) + 50,
+                width: 12,
+                height: 12
+            });
+        }
+
+        function spawnEnemy() {
+            const types = ['slime', 'bat'];
+            enemies.push({
+                x: Math.random() < 0.5 ? -30 : canvas.width + 30,
+                y: Math.random() * (canvas.height - 150) + 50,
+                width: 24,
+                height: 20,
+                speed: (Math.random() * 1.5 + 0.5) * (Math.random() < 0.5 ? 1 : -1),
+                type: types[Math.floor(Math.random() * types.length)],
+                health: 1
+            });
+        }
+
+        function spawnCollectible() {
+            collectibles.push({
+                x: Math.random() * (canvas.width - 20),
+                y: Math.random() * (canvas.height - 100) + 50,
+                width: 16,
+                height: 16
+            });
+        }
+
+        function initGame() {
+            player.x = canvas.width / 2 - player.width / 2;
+            player.y = canvas.height - 80;
+            player.vx = 0;
+            player.vy = 0;
+            player.isAttacking = false;
+            player.invincible = false;
+            coins = [];
+            enemies = [];
+            particles = [];
+            collectibles = [];
+            for (let i = 0; i < 5; i++) spawnCoin();
+            spawnEnemy();
+            spawnCollectible();
+            score = 0;
+            lives = 3;
+            kills = 0;
+            level = 1;
+            gamePaused = false;
+            updateHUD();
+        }
+
+        function updateHUD() {
+            document.getElementById('scoreDisplay').textContent = score;
+            document.getElementById('livesDisplay').textContent = lives;
+            document.getElementById('killsDisplay').textContent = kills;
+        }
+
+        function update() {
+            if (!gameRunning || gamePaused) return;
+
+            player.vx = 0;
+            player.vy = 0;
+
+            if (keys['ArrowLeft'] || keys['KeyA']) {
+                player.vx = -player.speed;
+                player.direction = -1;
+            }
+            if (keys['ArrowRight'] || keys['KeyD']) {
+                player.vx = player.speed;
+                player.direction = 1;
+            }
+            if (keys['ArrowUp'] || keys['KeyW']) {
+                player.vy = -player.speed;
+            }
+            if (keys['ArrowDown'] || keys['KeyS']) {
+                player.vy = player.speed;
+            }
+
+            if (keys['Space'] && !player.isAttacking) {
+                player.isAttacking = true;
+                player.attackTimer = 15;
+                const attackRange = 40;
+                const attackX = player.direction === 1 ? player.x + player.width : player.x - attackRange;
+                enemies.forEach((enemy, index) => {
+                    if (enemy.x < attackX + attackRange &&
+                        enemy.x + enemy.width > attackX &&
+                        enemy.y < player.y + player.height &&
+                        enemy.y + enemy.height > player.y) {
+                        enemy.health--;
+                        if (enemy.health <= 0) {
+                            createParticles(enemy.x + enemy.width/2, enemy.y + enemy.height/2, '#e74c3c', 10);
+                            enemies.splice(index, 1);
+                            kills++;
+                            score += 50;
+                            setTimeout(() => spawnEnemy(), 1000);
+                        }
+                    }
+                });
+            }
+
+            if (player.isAttacking) {
+                player.attackTimer--;
+                if (player.attackTimer <= 0) {
+                    player.isAttacking = false;
+                }
+            }
+
+            if (player.invincible) {
+                player.invincibleTimer--;
+                if (player.invincibleTimer <= 0) {
+                    player.invincible = false;
+                }
+            }
+
+            player.x += player.vx;
+            player.y += player.vy;
+            player.x = Math.max(0, Math.min(canvas.width - player.width, player.x));
+            player.y = Math.max(40, Math.min(canvas.height - player.height - 20, player.y));
+
+            enemies.forEach((enemy, index) => {
+                enemy.x += enemy.speed;
+                if (enemy.x <= 0 || enemy.x >= canvas.width - enemy.width) {
+                    enemy.speed *= -1;
+                }
+                if (!player.invincible &&
+                    player.x < enemy.x + enemy.width &&
+                    player.x + player.width > enemy.x &&
+                    player.y < enemy.y + enemy.height &&
+                    player.y + player.height > enemy.y) {
+                    playerHit();
+                }
+            });
+
+            coins.forEach((coin, index) => {
+                if (player.x < coin.x + coin.width &&
+                    player.x + player.width > coin.x &&
+                    player.y < coin.y + coin.height &&
+                    player.y + player.height > coin.y) {
+                    coins.splice(index, 1);
+                    score += 10;
+                    createParticles(coin.x + coin.width/2, coin.y + coin.height/2, '#f1c40f', 5);
+                    updateHUD();
+                    setTimeout(() => spawnCoin(), 500);
+                }
+            });
+
+            collectibles.forEach((item, index) => {
+                if (player.x < item.x + item.width &&
+                    player.x + player.width > item.x &&
+                    player.y < item.y + item.height &&
+                    player.y + player.height > item.y) {
+                    collectibles.splice(index, 1);
+                    lives = Math.min(lives + 1, 5);
+                    createParticles(item.x + item.width/2, item.y + item.height/2, '#e74c3c', 8);
+                    updateHUD();
+                    setTimeout(() => spawnCollectible(), 3000);
+                }
+            });
+
+            particles.forEach((particle, index) => {
+                particle.x += particle.vx;
+                particle.y += particle.vy;
+                particle.life--;
+                if (particle.life <= 0) {
+                    particles.splice(index, 1);
+                }
+            });
+
+            if (kills >= level * 5) {
+                level++;
+                spawnEnemy();
+                score += 100;
+            }
+
+            if (score >= 500) {
+                gameRunning = false;
+                document.getElementById('winScreen').classList.remove('hidden');
+                document.getElementById('winScreen').classList.add('flex');
+            }
+        }
+
+        function playerHit() {
+            lives--;
+            updateHUD();
+            createParticles(player.x + player.width/2, player.y + player.height/2, '#e74c3c', 15);
+            if (lives <= 0) {
+                gameRunning = false;
+                document.getElementById('finalScore').textContent = score;
+                document.getElementById('gameOverScreen').classList.remove('hidden');
+                document.getElementById('gameOverScreen').classList.add('flex');
+            } else {
+                player.invincible = true;
+                player.invincibleTimer = 90;
+            }
+        }
+
+        function draw() {
+            ctx.fillStyle = '#1a1a2e';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#2d3436';
+            ctx.fillRect(0, canvas.height - 40, canvas.width, 40);
+            ctx.fillStyle = '#27ae60';
+            for (let i = 0; i < canvas.width; i += 16) {
+                ctx.fillRect(i, canvas.height - 44, 4, 8);
+            }
+            ctx.fillStyle = '#636e72';
+            ctx.fillRect(100, canvas.height - 120, 120, 20);
+            ctx.fillRect(350, canvas.height - 160, 100, 20);
+            ctx.fillRect(480, canvas.height - 200, 80, 20);
+            coins.forEach(coin => drawCoin(coin));
+            collectibles.forEach(item => drawCollectible(item));
+            enemies.forEach(enemy => drawEnemy(enemy));
+            drawPlayer();
+            particles.forEach(particle => drawParticle(particle));
+            if (gamePaused) {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#fff';
+                ctx.font = '20px "Press Start 2P"';
+                ctx.textAlign = 'center';
+                ctx.fillText('PAUSED', canvas.width/2, canvas.height/2);
+            }
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        document.addEventListener('keydown', (e) => {
+            keys[e.code] = true;
+            if (e.code === 'KeyP' && gameRunning) {
+                gamePaused = !gamePaused;
+            }
+            if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            keys[e.code] = false;
+        });
+
+        document.getElementById('startBtn').addEventListener('click', () => {
+            document.getElementById('startScreen').classList.add('hidden');
+            gameRunning = true;
+            initGame();
+        });
+
+        document.getElementById('restartBtn').addEventListener('click', () => {
+            document.getElementById('gameOverScreen').classList.add('hidden');
+            document.getElementById('gameOverScreen').classList.remove('flex');
+            gameRunning = true;
+            initGame();
+        });
+
+        document.getElementById('playAgainBtn').addEventListener('click', () => {
+            document.getElementById('winScreen').classList.add('hidden');
+            document.getElementById('winScreen').classList.remove('flex');
+            gameRunning = true;
+            initGame();
+        });
+
+        createStars();
+        gameLoop();
+    </script>
+</body>
+</html>

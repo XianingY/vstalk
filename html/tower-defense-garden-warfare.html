@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>植物 vs 僵尸 - 塔防策略游戏</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Comic Sans MS', cursive;
+            background: linear-gradient(180deg, #87ceeb 0%, #98d982 60%, #5d8a3e 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        .sun-animation {
+            position: absolute;
+            top: 10%;
+            right: 15%;
+            font-size: 80px;
+            animation: sunRotate 20s linear infinite;
+        }
+        @keyframes sunRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .plants-zombies {
+            font-size: 100px;
+            margin-bottom: 30px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        h1 {
+            font-size: 3.5em;
+            color: #2d5a27;
+            text-shadow: 3px 3px 0 #fff;
+            margin-bottom: 15px;
+        }
+        .subtitle {
+            font-size: 1.3em;
+            color: #5d8a3e;
+            margin-bottom: 35px;
+        }
+        .cta-btn {
+            padding: 18px 55px;
+            background: #4caf50;
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+            transition: all 0.3s;
+        }
+        .cta-btn:hover {
+            transform: scale(1.05);
+            background: #66bb6a;
+        }
+        .plants-showcase {
+            padding: 80px 50px;
+            background: #5d8a3e;
+        }
+        .plants-showcase h2 {
+            text-align: center;
+            font-size: 2em;
+            color: #fff;
+            margin-bottom: 50px;
+        }
+        .plant-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .plant-card {
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .plant-card:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+        .plant-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .plant-name {
+            font-weight: bold;
+            color: #fff;
+            font-size: 0.9em;
+        }
+        .zombie-threat {
+            padding: 80px 50px;
+            background: linear-gradient(180deg, #5d8a3e, #3d5a2e);
+        }
+        .zombie-threat h2 {
+            text-align: center;
+            font-size: 2em;
+            color: #fff;
+            margin-bottom: 50px;
+        }
+        .zombie-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .zombie {
+            background: rgba(0,0,0,0.2);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .zombie:hover {
+            background: rgba(0,0,0,0.3);
+            transform: scale(1.05);
+        }
+        .zombie-icon {
+            font-size: 3em;
+            filter: grayscale(30%);
+        }
+        .zombie-name {
+            color: #ddd;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        .levels {
+            padding: 80px 50px;
+            background: #3d5a2e;
+        }
+        .levels h2 {
+            text-align: center;
+            font-size: 2em;
+            color: #fff;
+            margin-bottom: 40px;
+        }
+        .level-list {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .level {
+            background: rgba(255,255,255,0.15);
+            padding: 20px 35px;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .level:hover {
+            background: rgba(255,255,255,0.25);
+        }
+        .level-num {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        .level-name {
+            color: #fff;
+            font-size: 0.9em;
+        }
+        .footer {
+            padding: 50px;
+            text-align: center;
+            background: #2d5a27;
+        }
+        .platforms {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        .platform {
+            padding: 12px 30px;
+            background: #fff;
+            color: #2d5a27;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .platform:hover {
+            background: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="sun-animation">☀️</div>
+        <div class="plants-zombies">🌻🧟</div>
+        <h1>植物大战僵尸</h1>
+        <p class="subtitle">用智慧保护你的家园！</p>
+        <button class="cta-btn">🌱 开始种植</button>
+    </section>
+
+    <section class="plants-showcase">
+        <h2>植物军团</h2>
+        <div class="plant-grid">
+            <div class="plant-card">
+                <div class="plant-icon">🌻</div>
+                <div class="plant-name">向日葵</div>
+            </div>
+            <div class="plant-card">
+                <div class="plant-icon">🥬</div>
+                <div class="plant-name">豌豆射手</div>
+            </div>
+            <div class="plant-card">
+                <div class="plant-icon">🌽</div>
+                <div class="plant-name">玉米投手</div>
+            </div>
+            <div class="plant-card">
+                <div class="plant-icon">🍒</div>
+                <div class="plant-name">樱桃炸弹</div>
+            </div>
+            <div class="plant-card">
+                <div class="plant-icon">❄️</div>
+                <div class="plant-name">寒冰射手</div>
+            </div>
+            <div class="plant-card">
+                <div class="plant-icon">🛡️</div>
+                <div class="plant-name">坚果墙</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="zombie-threat">
+        <h2>僵尸威胁</h2>
+        <div class="zombie-grid">
+            <div class="zombie">
+                <div class="zombie-icon">🧟</div>
+                <div class="zombie-name">普通僵尸</div>
+            </div>
+            <div class="zombie">
+                <div class="zombie-icon">💃</div>
+                <div class="zombie-name">舞王僵尸</div>
+            </div>
+            <div class="zombie">
+                <div class="zombie-icon">🏃</div>
+                <div class="zombie-name">路障僵尸</div>
+            </div>
+            <div class="zombie">
+                <div class="zombie-icon">🏈</div>
+                <div class="zombie-name">橄榄球僵尸</div>
+            </div>
+            <div class="zombie">
+                <div class="zombie-icon">🧠</div>
+                <div class="zombie-name">博士僵尸</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="levels">
+        <h2>挑战关卡</h2>
+        <div class="level-list">
+            <div class="level"><div class="level-num">1-1</div><div class="level-name">草地</div></div>
+            <div class="level"><div class="level-num">3-1</div><div class="level-name">泳池</div></div>
+            <div class="level"><div class="level-num">5-1</div><div class="level-name">屋顶</div></div>
+            <div class="level"><div class="level-num">?</div><div class="level-name">隐藏关</div></div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <h2 style="color: #fff;">下载游戏</h2>
+        <div class="platforms">
+            <span class="platform">iOS</span>
+            <span class="platform">Android</span>
+            <span class="platform">PC</span>
+            <span class="platform">Switch</span>
+        </div>
+    </footer>
+</body>
+</html>

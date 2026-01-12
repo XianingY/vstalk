@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok风格 - 短视频平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        tiktok: {
+                            pink: '#fe2c55',
+                            cyan: '#25f4ee',
+                            black: '#000000',
+                            dark: '#121212',
+                            gray: '#161823',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-subtle': 'bounceSubtle 2s infinite',
+                        'spin-slow': 'spin 3s linear infinite',
+                    },
+                    keyframes: {
+                        bounceSubtle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * { -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', system-ui, sans-serif; }
+
+        /* Hide scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Video container aspect ratio for mobile */
+        .video-container {
+            aspect-ratio: 9/16;
+            max-height: calc(100vh - 120px);
+        }
+
+        /* Gradient overlay */
+        .gradient-overlay {
+            background: linear-gradient(to bottom, transparent 0%, transparent 50%, rgba(0,0,0,0.6) 100%);
+        }
+
+        /* Audio wave animation */
+        .audio-wave span {
+            display: inline-block;
+            width: 3px;
+            background: white;
+            border-radius: 3px;
+            animation: wave 1.2s ease-in-out infinite;
+        }
+        .audio-wave span:nth-child(1) { animation-delay: 0s; height: 8px; }
+        .audio-wave span:nth-child(2) { animation-delay: 0.1s; height: 12px; }
+        .audio-wave span:nth-child(3) { animation-delay: 0.2s; height: 16px; }
+        .audio-wave span:nth-child(4) { animation-delay: 0.3s; height: 10px; }
+        .audio-wave span:nth-child(5) { animation-delay: 0.4s; height: 14px; }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.5); }
+        }
+
+        /* Heart animation */
+        .heart-active {
+            animation: heartPop 0.3s ease-out;
+        }
+        @keyframes heartPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        /* Video snap scrolling */
+        .video-scroll {
+            scroll-snap-type: y mandatory;
+            scroll-snap-stop: always;
+        }
+        .video-item {
+            scroll-snap-align: start;
+        }
+
+        /* Following/For You tab */
+        .tab-active {
+            position: relative;
+        }
+        .tab-active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 32px;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+        }
+
+        /* Sticky header transition */
+        .header-scrolled {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-tiktok-black text-white overflow-hidden">
+    <div class="flex h-screen max-w-md mx-auto">
+        <!-- Main Content Area -->
+        <div class="flex-1 flex flex-col relative">
+            <!-- Top Header -->
+            <header id="header" class="fixed top-0 left-0 right-0 z-40 px-4 py-3 transition-all duration-300">
+                <div class="flex items-center justify-between">
+                    <!-- Search -->
+                    <div class="flex-1 max-w-[280px]">
+                        <div class="relative">
+                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                            </svg>
+                            <input type="text" placeholder="搜索视频、创作者" class="w-full pl-10 pr-4 py-2 bg-tiktok-gray rounded-full text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white/20">
+                        </div>
+                    </div>
+
+                    <!-- Live indicator -->
+                    <button class="px-3 py-1 ml-2 bg-tiktok-pink rounded text-xs font-medium">LIVE</button>
+                </div>
+            </header>
+
+            <!-- Following/For You Tabs -->
+            <div class="fixed top-14 left-0 right-0 z-30 px-4 py-3 bg-tiktok-black/80 backdrop-blur-sm">
+                <div class="flex items-center justify-center gap-8">
+                    <button class="tab-active text-white font-semibold text-lg" id="followingTab">关注</button>
+                    <button class="text-gray-400 hover:text-white font-semibold text-lg" id="forYouTab">推荐</button>
+                </div>
+            </div>
+
+            <!-- Video Feed -->
+            <main class="flex-1 overflow-y-auto video-scroll no-scrollbar pt-28 pb-20" id="videoFeed">
+                <!-- Video 1 -->
+                <div class="video-item h-screen flex items-center justify-center relative bg-gradient-to-br from-purple-900 via-pink-900 to-red-900">
+                    <!-- Video placeholder -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-9xl mb-4">🎵</div>
+                            <p class="text-white/50">视频预览</p>
+                        </div>
+                    </div>
+
+                    <!-- Gradient overlay -->
+                    <div class="absolute inset-0 gradient-overlay"></div>
+
+                    <!-- Left side - User info -->
+                    <div class="absolute bottom-24 left-4 z-20">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-tiktok-pink to-tiktok-cyan p-[2px]">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=1" alt="avatar" class="w-full h-full rounded-full bg-black">
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm">@ dancing_queen</p>
+                                <p class="text-xs text-gray-300">舞蹈达人</p>
+                            </div>
+                            <button class="ml-2 px-4 py-1.5 bg-tiktok-pink rounded text-xs font-medium hover:bg-tiktok-pink/80 transition-colors">关注</button>
+                        </div>
+                        <p class="text-sm mb-2">这支舞蹈跳了100遍还是停不下来 🕺💃</p>
+                        <p class="text-xs text-gray-400 flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                            原声 - 热门舞曲
+                        </p>
+                    </div>
+
+                    <!-- Right side - Actions -->
+                    <div class="absolute bottom-24 right-4 z-20 flex flex-col items-center gap-4">
+                        <div class="flex flex-col items-center">
+                            <button class="w-12 h-12 rounded-full bg-tiktok-gray/50 flex items-center justify-center hover:bg-white/10 transition-colors group" onclick="toggleLike(this)">
+                                <svg class="w-7 h-7 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                            </button>
+                            <span class="text-xs mt-1">128.5万</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <button class="w-12 h-12 rounded-full bg-tiktok-gray/50 flex items-center justify-center hover:bg-white/10 transition-colors">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                </svg>
+                            </button>
+                            <span class="text-xs mt-1">8456</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <button class="w-12 h-12 rounded-full bg-tiktok-gray/50 flex items-center justify-center hover:bg-white/10 transition-colors">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                                </svg>
+                            </button>
+                            <span class="text-xs mt-1">1.2万</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <button class="w-12 h-12 rounded-full bg-tiktok-gray/50 flex items-center justify-center hover:bg-white/10 transition-colors">
+                                <svg class="w-7 h-7 animate-spin-slow" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                </svg>
+                            </button>
+                            <span class="text-xs mt-1">分享</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="video-item h-screen flex items-center justify-center relative bg-gradient-to-br from-blue-900 via-cyan-900 to-teal-900">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-9xl mb-4">🍳</div>
+                            <p class="text-white/50">美食制作视频</p>
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 gradient-overlay"></div>
+
+                    <div class="absolute bottom-24 left-4 z-20">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-tiktok-pink to-tiktok-cyan p-[2px]">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=2" alt="avatar" class="w-full h-full rounded-full bg-black">
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm">@ chef_master</p>
+                                <p class="text-xs text-gray-300">美食博主</p>
+                            </div>
+                            <button class="ml-2 px-4 py-1.5 bg-tiktok-pink rounded text-xs font-medium hover:bg-tiktok-pink/80 transition-colors">关注</button>
+                        </div>
+                        <p class="text-sm mb-2">3分钟学会做这道家常菜！简单又美味 👨‍🍳</p>
+                        <p class="text-xs text-gray-400 flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                            美食制作教程
+                        </p>
+                    </div>
+
+                    <div class="absolute bottom-24 right-4 z-20 flex flex-col items-center gap-4">
+                        <div class="flex flex-col items-center">
+                            <button class="w-12 h-12 rounded-full bg-tiktok-gray/50 flex items-center justify-center hover:bg-white/10 transition-colors group">
+                                <svg class="w-7 h-7 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                            </button>
+                            <span class="text-xs mt-1">56.3万</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <button class="w-12 h-12 rounded-full bg-tiktok-gray/50 flex items-center justify-center hover:bg-white/10 transition-colors">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                </svg>
+                            </button>
+                            <span class="text-xs mt-1">2341</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <button class="w-12 h-12 rounded-full bg-tiktok-gray/50 flex items-center justify-center hover:bg-white/10 transition-colors">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                                </svg>
+                            </button>
+                            <span class="text-xs mt-1">8921</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <button class="w-12 h-12 rounded-full bg-tiktok-gray/50 flex items-center justify-center hover:bg-white/10 transition-colors">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                            </button>
+                            <span class="text-xs mt-1">收藏</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video 3 -->
+                <div class="video-item h-screen flex items-center justify-center relative bg-gradient-to-br from-green-900 via-lime-900 to-yellow-900">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="text-center">
+                            <div class="text-9xl mb-4">🐱</div>
+                            <p class="text-white/50">萌宠视频</p>
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 gradient-overlay"></div>
+
+                    <div class="absolute bottom-24 left-4 z-20">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-tiktok-pink to-tiktok-cyan p-[2px]">
+                                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=3" alt="avatar" class="w-full h-full rounded-full bg-black">
+                            </div>
+                            <div>
+                                <p class="font-semibold text-sm">@ cute_pets</p>
+                                <p class="text-xs text-gray-300">萌宠日常</p>
+                            </div>
+                            <button class="ml-2 px-4 py-1.5 bg-tiktok-pink rounded text-xs font-medium hover:bg-tiktok-pink/80 transition-colors">关注</button>
+                        </div>
+                        <p class="text-sm mb-2">小奶猫第一次看到雪的反应太可爱了 ❄️🐱</p>
+                        <p class="text-xs text-gray-400 flex items-center gap-1">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                            小猫又又又
+                        </p>
+                    </div>
+
+                    <div class="absolute bottom-24 right-4 z-20 flex flex-col items-center gap-4">
+                        <div class="flex flex-col items-center">
+                            <button class="w-12 h-12 rounded-full bg-tiktok-gray/50 flex items-center justify-center hover:bg-white/10 transition-colors group">
+                                <svg class="w-7 h-7 text-white group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                            </button>
+                            <span class="text-xs mt-1">89.2万</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <button class="w-12 h-12 rounded-full bg-tiktok-gray/50 flex items-center justify-center hover:bg-white/10 transition-colors">
+                                <svg class="w-7 h-7" fill="none" stroke="Box="0 currentColor" view0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                </svg>
+                            </button>
+                            <span class="text-xs mt-1">5678</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <button class="w-12 h-12 rounded-full bg-tiktok-gray/50 flex items-center justify-center hover:bg-white/10 transition-colors">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                                </svg>
+                            </button>
+                            <span class="text-xs mt-1">1.5万</span>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <button class="w-12 h-12 rounded-full bg-tiktok-gray/50 flex items-center justify-center hover:bg-white/10 transition-colors">
+                                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                            </button>
+                            <span class="text-xs mt-1">收藏</span>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Bottom Navigation -->
+            <nav class="fixed bottom-0 left-0 right-0 z-30 bg-tiktok-black border-t border-gray-800">
+                <div class="flex items-center justify-around py-3">
+                    <a href="#" class="flex flex-col items-center gap-1 text-white">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <span class="text-xs">首页</span>
+                    </a>
+                    <a href="#" class="flex flex-col items-center gap-1 text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <span class="text-xs">发现</span>
+                    </a>
+                    <a href="#" class="w-14 h-8 bg-gradient-to-r from-tiktok-pink to-tiktok-cyan rounded-lg flex items-center justify-center -mt-4">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 4v16m8-8H4"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="flex flex-col items-center gap-1 text-gray-400 hover:text-white transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/>
+                        </svg>
+                        <span class="text-xs">消息</span>
+                    </a>
+                    <a href="#" class="flex flex-col items-center gap-1 text-gray-400 hover:text-white transition-colors">
+                        <div class="w-6 h-6 rounded-full bg-gray-600 overflow-hidden">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=me" alt="profile" class="w-full h-full">
+                        </div>
+                        <span class="text-xs">我的</span>
+                    </a>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <script>
+        // Toggle like button
+        function toggleLike(btn) {
+            btn.classList.add('heart-active');
+            const svg = btn.querySelector('svg');
+            svg.setAttribute('fill', 'currentColor');
+            svg.classList.add('text-tiktok-pink');
+
+            setTimeout(() => {
+                btn.classList.remove('heart-active');
+            }, 300);
+        }
+
+        // Tab switching
+        const followingTab = document.getElementById('followingTab');
+        const forYouTab = document.getElementById('forYouTab');
+
+        followingTab.addEventListener('click', () => {
+            followingTab.classList.add('tab-active', 'text-white');
+            followingTab.classList.remove('text-gray-400');
+            forYouTab.classList.remove('tab-active', 'text-white');
+            forYouTab.classList.add('text-gray-400');
+        });
+
+        forYouTab.addEventListener('click', () => {
+            forYouTab.classList.add('tab-active', 'text-white');
+            forYouTab.classList.remove('text-gray-400');
+            followingTab.classList.remove('tab-active', 'text-white');
+            followingTab.classList.add('text-gray-400');
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        const videoFeed = document.getElementById('videoFeed');
+
+        videoFeed.addEventListener('scroll', () => {
+            if (videoFeed.scrollTop > 50) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+        });
+
+        // Prevent default touch behavior for snap scrolling
+        document.addEventListener('touchmove', function(e) {
+            if (e.target.closest('.video-scroll')) {
+                // Allow default scrolling
+            }
+        }, { passive: true });
+    </script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>忍者疾风 - 动作潜入游戏</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Arial Black', sans-serif;
+            background: #0d0d0d;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a0a0a 0%, #0d0d0d 50%, #0a1a0a 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .sword {
+            font-size: 100px;
+            animation: slash 2s ease-in-out infinite;
+        }
+        @keyframes slash {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+        }
+        h1 {
+            font-size: 4em;
+            margin: 20px 0;
+            text-shadow: 0 0 20px #ff3300;
+            letter-spacing: 5px;
+        }
+        .subtitle {
+            font-size: 1.3em;
+            color: #888;
+            margin-bottom: 30px;
+        }
+        .cta-btn {
+            padding: 18px 55px;
+            background: #ff3300;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        .cta-btn:hover {
+            background: #ff6600;
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 51, 0, 0.6);
+        }
+        .ninja-skills {
+            padding: 80px 50px;
+            background: #0a0a0a;
+        }
+        .ninja-skills h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 50px;
+            color: #ff3300;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .skill {
+            background: linear-gradient(180deg, #1a1a1a, #0a0a0a);
+            border: 1px solid #333;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .skill:hover {
+            border-color: #ff3300;
+            transform: translateY(-5px);
+        }
+        .skill-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        .skill h3 {
+            color: #ff3300;
+            margin-bottom: 10px;
+        }
+        .missions {
+            padding: 80px 50px;
+            background: linear-gradient(180deg, #0d0d0d, #1a0a0a);
+        }
+        .missions h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 40px;
+        }
+        .mission-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .mission {
+            background: rgba(255, 51, 0, 0.1);
+            border-left: 4px solid #ff3300;
+            padding: 25px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .mission-icon {
+            font-size: 2em;
+        }
+        .mission h4 {
+            color: #ff3300;
+            margin-bottom: 5px;
+        }
+        .mission p {
+            color: #888;
+            font-size: 0.9em;
+        }
+        .footer {
+            padding: 50px;
+            text-align: center;
+            background: #050505;
+        }
+        .platforms {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        .platform {
+            padding: 12px 30px;
+            border: 2px solid #ff3300;
+            color: #ff3300;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .platform:hover {
+            background: #ff3300;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="sword">⚔️</div>
+        <h1>忍者疾风</h1>
+        <p class="subtitle">隐于阴影，一击致命</p>
+        <button class="cta-btn">🌙 执行任务</button>
+    </section>
+
+    <section class="ninja-skills">
+        <h2>忍者技能</h2>
+        <div class="skills-grid">
+            <div class="skill">
+                <div class="skill-icon">👤</div>
+                <h3>影分身</h3>
+                <p>制造分身迷惑敌人</p>
+            </div>
+            <div class="skill">
+                <div class="skill-icon">💨</div>
+                <h3>瞬身术</h3>
+                <p>瞬间移动到目标位置</p>
+            </div>
+            <div class="skill">
+                <div class="skill-icon">🗡️</div>
+                <h3>手里剑</h3>
+                <p>精准投掷致命暗器</p>
+            </div>
+            <div class="skill">
+                <div class="skill-icon">🔥</div>
+                <h3>火遁</h3>
+                <p>释放火焰攻击敌人</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="missions">
+        <h2>任务目标</h2>
+        <div class="mission-list">
+            <div class="mission">
+                <span class="mission-icon">🏯</span>
+                <div>
+                    <h4>潜入大名的城堡</h4>
+                    <p>避开守卫，获取机密情报</p>
+                </div>
+            </div>
+            <div class="mission">
+                <span class="mission-icon">💀</span>
+                <div>
+                    <h4>击败叛忍首领</h4>
+                    <p>面对强大的敌人，展示你的真正实力</p>
+                </div>
+            </div>
+            <div class="mission">
+                <span class="mission-icon">🐉</span>
+                <div>
+                    <h4>驯服传奇龙兽</h4>
+                    <p>找到并收服传说中的神兽</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <h2>成为最强忍者</h2>
+        <div class="platforms">
+            <span class="platform">PC</span>
+            <span class="platform">PS5</span>
+            <span class="platform">Xbox</span>
+            <span class="platform">Switch</span>
+        </div>
+    </footer>
+</body>
+</html>

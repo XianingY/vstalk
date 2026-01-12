@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>足球经理 - 体育经营游戏</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(180deg, #1a472a 0%, #2d5a3d 50%, #1a472a 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(ellipse at center, #2d5a3d 0%, #1a472a 100%);
+        }
+        .trophy {
+            font-size: 100px;
+            animation: trophyShine 3s ease-in-out infinite;
+        }
+        @keyframes trophyShine {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.3); }
+        }
+        h1 {
+            font-size: 3.5em;
+            color: #ffd700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 15px;
+        }
+        .subtitle {
+            font-size: 1.3em;
+            color: #ddd;
+            margin-bottom: 35px;
+        }
+        .cta-btn {
+            padding: 18px 55px;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            border: none;
+            border-radius: 30px;
+            color: #1a472a;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .cta-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+        }
+        .league-table {
+            padding: 80px 50px;
+            background: rgba(0,0,0,0.2);
+        }
+        .league-table h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 50px;
+            color: #ffd700;
+        }
+        .table-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .table-header {
+            display: grid;
+            grid-template-columns: 60px 1fr 80px 80px 80px;
+            padding: 15px 25px;
+            background: rgba(0,0,0,0.3);
+            font-weight: bold;
+        }
+        .team-row {
+            display: grid;
+            grid-template-columns: 60px 1fr 80px 80px 80px;
+            padding: 15px 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            align-items: center;
+        }
+        .team-row:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        .team-name {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .team-logo {
+            width: 30px;
+            height: 30px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+        .manager-tools {
+            padding: 80px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .manager-tools h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 50px;
+        }
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+        .tool-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .tool-card:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-5px);
+        }
+        .tool-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        .tool-card h3 {
+            color: #ffd700;
+            margin-bottom: 10px;
+        }
+        .signings {
+            padding: 80px 50px;
+            background: rgba(0,0,0,0.2);
+        }
+        .signings h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 40px;
+        }
+        .player-list {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .player-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+        }
+        .player-avatar {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        .player-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .player-pos {
+            color: #ffd700;
+            font-size: 0.9em;
+        }
+        .footer {
+            padding: 50px;
+            text-align: center;
+            background: #0d2a1a;
+        }
+        .download {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        .download-btn {
+            padding: 12px 35px;
+            border: 2px solid #ffd700;
+            color: #ffd700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .download-btn:hover {
+            background: #ffd700;
+            color: #1a472a;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="trophy">🏆</div>
+        <h1>足球经理</h1>
+        <p class="subtitle">执掌豪门，冲击冠军！</p>
+        <button class="cta-btn">⚽ 开始执教</button>
+    </section>
+
+    <section class="league-table">
+        <h2>联赛积分榜</h2>
+        <div class="table-wrapper">
+            <div class="table-header">
+                <span>#</span>
+                <span>球队</span>
+                <span>胜</span>
+                <span>平</span>
+                <span>负</span>
+            </div>
+            <div class="team-row">
+                <span>1</span>
+                <div class="team-name"><div class="team-logo">🔴</div>红星FC</div>
+                <span>18</span>
+                <span>5</span>
+                <span>2</span>
+            </div>
+            <div class="team-row">
+                <span>2</span>
+                <div class="team-name"><div class="team-logo">🔵</div>蓝月城</div>
+                <span>17</span>
+                <span>6</span>
+                <span>2</span>
+            </div>
+            <div class="team-row">
+                <span>3</span>
+                <div class="team-name"><div class="team-logo">🟡</div>金鹰队</div>
+                <span>16</span>
+                <span>4</span>
+                <span>5</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="manager-tools">
+        <h2>执教工具</h2>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <div class="tool-icon">👥</div>
+                <h3>球员管理</h3>
+                <p>签约、转会、培养</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">📋</div>
+                <h3>战术布置</h3>
+                <p>阵型、打法、风格</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">🏋️</div>
+                <h3>训练系统</h3>
+                <p>提升球员能力</p>
+            </div>
+            <div class="tool-card">
+                <div class="tool-icon">💰</div>
+                <h3>财务管理</h3>
+                <p>预算、转播、赞助</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="signings">
+        <h2>明星球员</h2>
+        <div class="player-list">
+            <div class="player-card">
+                <div class="player-avatar">⚽</div>
+                <div class="player-name">C.罗纳尔多</div>
+                <div class="player-pos">前锋</div>
+            </div>
+            <div class="player-card">
+                <div class="player-avatar">⚽</div>
+                <div class="player-name">梅西</div>
+                <div class="player-pos">前锋</div>
+            </div>
+            <div class="player-card">
+                <div class="player-avatar">🧤</div>
+                <div class="player-name">诺伊尔</div>
+                <div class="player-pos">门将</div>
+            </div>
+            <div class="player-card">
+                <div class="player-avatar">⚽</div>
+                <div class="player-name">姆巴佩</div>
+                <div class="player-pos">前锋</div>
+            </div>
+            <div class="player-card">
+                <div class="player-avatar">⚽</div>
+                <div class="player-name">哈兰德</div>
+                <div class="player-pos">前锋</div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <h2>成为传奇教练</h2>
+        <div class="download">
+            <span class="download-btn">PC</span>
+            <span class="download-btn">Mac</span>
+            <span class="download-btn">移动端</span>
+        </div>
+    </footer>
+</body>
+</html>

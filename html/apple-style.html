@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['SF Pro Display', 'SF Pro Text', '-apple-system', 'sans-serif'],
+                    },
+                    colors: {
+                        apple: {
+                            blue: '#0071e3',
+                            dark: '#1d1d1f',
+                            gray: '#f5f5f7',
+                            light: '#fafafa',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-out forwards',
+                        'slide-up': 'slideUp 1s ease-out forwards',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideUp: { '0%': { opacity: '0', transform: 'translateY(30px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+                        float: { '0%, 100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-20px)' } }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { -webkit-font-smoothing: antialiased; }
+        .hero-gradient { background: linear-gradient(180deg, #f5f5f7 0%, #fff 100%); }
+        .product-shadow { filter: drop-shadow(0 20px 40px rgba(0,0,0,0.15)); }
+        .bento-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        @media (max-width: 768px) { .bento-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body class="font-sans bg-white text-apple-dark">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-[rgba(0,0,0,0.8)] backdrop-blur-md border-b border-white/10">
+        <div class="max-w-5xl mx-auto px-4 h-12 flex items-center justify-between">
+            <a href="#" class="text-white hover:opacity-80 transition-opacity">
+                <svg class="w-18 h-5" viewBox="0 0 76 24" fill="currentColor">
+                    <path d="M18.6 5.6c.4-.5 1-.8 1.7-.8h5.7c.7 0 1.3.3 1.7.8l3.4 4.5c.2.3.5.5.9.5h9.5c.4 0 .7-.2.9-.5l1.8-2.4c.4-.5 1-.8 1.7-.8h5.7c.7 0 1.3.3 1.7.8L52 12c.2.3.3.6.3 1s-.1.7-.3 1l-3.4 4.5c-.4.5-1 .8-1.7.8h-5.7c-.7 0-1.3-.3-1.7-.8l-3.4-4.5c-.2-.3-.5-.5-.9-.5h-9.5c-.4 0-.7.2-.9.5l-1.8 2.4c-.4.5-1 .8-1.7.8h-5.7c-.7 0-1.3-.3-1.7-.8L4.3 13c-.2-.3-.3-.6-.3-1s.1-.7.3-1l3.4-4.5c.4-.5 1-.8 1.7-.8h5.7c.7 0 1.3.3 1.7.8L18.6 5.6zm22.2 6.6c0 2.5-1.7 4.5-4.5 4.5s-4.5-2-4.5-4.5 1.7-4.5 4.5-4.5 4.5 2 4.5 4.5zm-9 0c0 1.6 1.1 2.8 2.8 2.8s2.8-1.3 2.8-2.8-1.1-2.8-2.8-2.8-2.8 1.3-2.8 2.8zm9 5.3c0 2.5-1.7 4.5-4.5 4.5s-4.5-2-4.5-4.5 1.7-4.5 4.5-4.5 4.5 2 4.5 4.5zm-9 0c0 1.6 1.1 2.8 2.8 2.8s2.8-1.3 2.8-2.8-1.1-2.8-2.8-2.8-2.8 1.3-2.8 2.8z"/>
+                </svg>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#" class="text-xs text-gray-300 hover:text-white transition-colors">商店</a>
+                <a href="#" class="text-xs text-gray-300 hover:text-white transition-colors">Mac</a>
+                <a href="#" class="text-xs text-gray-300 hover:text-white transition-colors">iPad</a>
+                <a href="#" class="text-xs text-gray-300 hover:text-white transition-colors">iPhone</a>
+                <a href="#" class="text-xs text-gray-300 hover:text-white transition-colors">Watch</a>
+                <a href="#" class="text-xs text-gray-300 hover:text-white transition-colors">AirPods</a>
+                <a href="#" class="text-xs text-gray-300 hover:text-white transition-colors">支持</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="text-white hover:opacity-80">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                </a>
+                <a href="#" class="text-white hover:opacity-80 md:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section - iPhone -->
+    <section class="pt-12 hero-gradient min-h-screen flex items-center justify-center">
+        <div class="max-w-5xl mx-auto px-4 text-center w-full">
+            <div class="animate-fade-in">
+                <h2 class="text-2xl md:text-3xl font-semibold text-apple-dark mb-2">iPhone 16 Pro</h2>
+                <p class="text-xl text-apple-dark mb-8">你好，Apple 智能。</p>
+                <div class="flex items-center justify-center gap-4 mb-12">
+                    <a href="#" class="px-6 py-2 bg-apple-blue text-white rounded-full text-sm font-medium hover:bg-blue-600 transition-colors">立即购买</a>
+                    <a href="#" class="text-apple-blue text-sm font-medium hover:underline flex items-center gap-1">
+                        了解更多 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="animate-slide-up" style="animation-delay: 0.3s;">
+                <div class="w-64 h-96 md:w-80 md:h-[500px] mx-auto rounded-[3rem] bg-gradient-to-b from-gray-800 to-gray-900 product-shadow flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-transparent to-purple-500/20"></div>
+                    <div class="text-center text-white relative z-10">
+                        <div class="text-6xl mb-4">📱</div>
+                        <p class="text-sm text-gray-400">Pro 级摄像头</p>
+                    </div>
+                    <div class="absolute top-4 left-1/2 -translate-x-1/2 w-20 h-6 bg-black rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Second Hero - iPhone 16 -->
+    <section class="py-32 bg-white">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-apple-dark mb-4 animate-fade-in">iPhone 16</h2>
+            <p class="text-xl text-apple-dark mb-8 animate-slide-up">新配色，新体验。</p>
+            <div class="flex items-center justify-center gap-4 mb-12 animate-slide-up" style="animation-delay: 0.2s;">
+                <a href="#" class="px-6 py-2 bg-apple-blue text-white rounded-full text-sm font-medium hover:bg-blue-600 transition-colors">立即购买</a>
+                <a href="#" class="text-apple-blue text-sm font-medium hover:underline flex items-center gap-1">
+                    了解更多 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+            <div class="animate-slide-up" style="animation-delay: 0.4s;">
+                <div class="w-64 h-96 md:w-80 md:h-[500px] mx-auto rounded-[3rem] bg-gradient-to-b from-pink-300 to-pink-400 product-shadow flex items-center justify-center relative">
+                    <div class="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent"></div>
+                    <div class="text-center text-white">
+                        <div class="text-6xl mb-4">📱</div>
+                        <p class="text-sm font-medium">全新粉色</p>
+                    </div>
+                    <div class="absolute top-4 left-1/2 -translate-x-1/2 w-20 h-6 bg-black rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bento Grid Section -->
+    <section class="py-24 bg-apple-gray">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-apple-dark mb-12 text-center">探索各类产品。</h2>
+            <div class="bento-grid">
+                <div class="bg-white rounded-[28px] p-8 min-h-[300px] flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 cursor-pointer">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-apple-dark mb-2">MacBook Pro</h3>
+                        <p class="text-apple-dark/70">搭载 M4 芯片</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-8xl">💻</div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-[28px] p-8 min-h-[300px] flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 cursor-pointer">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-apple-dark mb-2">iPad Pro</h3>
+                        <p class="text-apple-dark/70">超乎想象的强大</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-8xl">📱</div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-[28px] p-8 min-h-[300px] flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 cursor-pointer">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-apple-dark mb-2">Apple Watch</h3>
+                        <p class="text-apple-dark/70">更健康，更强健</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-8xl">⌚</div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-[28px] p-8 min-h-[300px] flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 cursor-pointer">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-apple-dark mb-2">AirPods Pro</h3>
+                        <p class="text-apple-dark/70">主动降噪</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-8xl">🎧</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="py-32 bg-white">
+        <div class="max-w-6xl mx-auto px-4">
+            <h2 class="text-3xl md:text-4xl font-bold text-apple-dark mb-16 text-center">为什么选择 Apple</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center px-8">
+                    <div class="w-16 h-16 mx-auto mb-6 bg-apple-gray rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8 text-apple-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-apple-dark mb-3">隐私保护</h3>
+                    <p class="text-apple-dark/60">我们相信隐私是基本人权，每一款产品都从设计之初就考虑保护你的数据。</p>
+                </div>
+                <div class="text-center px-8">
+                    <div class="w-16 h-16 mx-auto mb-6 bg-apple-gray rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8 text-apple-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-apple-dark mb-3">环境责任</h3>
+                    <p class="text-apple-dark/60">我们致力于在 2030 年前实现全面碳中和，让地球更美好。</p>
+                </div>
+                <div class="text-center px-8">
+                    <div class="w-16 h-16 mx-auto mb-6 bg-apple-gray rounded-full flex items-center justify-center">
+                        <svg class="w-8 h-8 text-apple-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold text-apple-dark mb-3">品质保证</h3>
+                    <p class="text-apple-dark/60">每一款产品都经过严格测试，确保为你带来卓越的使用体验。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#f5f5f7] py-12">
+        <div class="max-w-5xl mx-auto px-4">
+            <p class="text-xs text-gray-500 mb-4">
+                1. Apple 智能功能将于今年晚些时候推出。
+            </p>
+            <div class="h-px bg-gray-300 mb-4"></div>
+            <div class="flex flex-wrap items-center justify-between gap-4 text-xs text-gray-500">
+                <p>Copyright © 2025 Apple Inc. 保留所有权利。</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:underline">隐私政策</a>
+                    <a href="#" class="hover:underline">使用条款</a>
+                    <a href="#" class="hover:underline">销售政策</a>
+                    <a href="#" class="hover:underline">法律信息</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

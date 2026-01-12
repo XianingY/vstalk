@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>龙域王国 - 史诗奇幻RPG</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #1a0a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #e8d5b7;
+        }
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23ffd700" opacity="0.1"/></svg>') center/cover;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.5) 100%);
+        }
+        .floating-dragons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .dragon {
+            position: absolute;
+            font-size: 60px;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.8;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+        h1 {
+            font-size: 5em;
+            text-shadow: 0 0 30px #ffd700, 0 0 60px #ff6b35;
+            margin-bottom: 20px;
+            letter-spacing: 5px;
+        }
+        .subtitle {
+            font-size: 1.8em;
+            color: #c9a227;
+            margin-bottom: 40px;
+        }
+        .cta-btn {
+            padding: 20px 60px;
+            font-size: 1.3em;
+            background: linear-gradient(45deg, #c9a227, #ffd700);
+            border: none;
+            border-radius: 50px;
+            color: #1a0a2e;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+        .cta-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+        }
+        .features {
+            padding: 100px 50px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .feature-card {
+            background: rgba(201, 162, 39, 0.1);
+            border: 2px solid #c9a227;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(201, 162, 39, 0.2);
+            box-shadow: 0 20px 40px rgba(201, 162, 39, 0.3);
+        }
+        .feature-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+        .feature-card h3 {
+            font-size: 1.5em;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+        .screenshot-gallery {
+            padding: 100px 50px;
+            background: rgba(0,0,0,0.3);
+        }
+        .gallery-title {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 50px;
+            color: #ffd700;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .gallery-item {
+            aspect-ratio: 16/10;
+            background: linear-gradient(135deg, #2a1a4a, #1a0a2e);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            border: 2px solid #c9a227;
+            transition: all 0.3s;
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+        .footer {
+            padding: 50px;
+            text-align: center;
+            background: rgba(0,0,0,0.5);
+        }
+        .footer h2 {
+            font-size: 2.5em;
+            color: #ffd700;
+            margin-bottom: 30px;
+        }
+        .download-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .download-btn {
+            padding: 15px 40px;
+            border: 2px solid #c9a227;
+            background: transparent;
+            color: #e8d5b7;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .download-btn:hover {
+            background: #c9a227;
+            color: #1a0a2e;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="floating-dragons">
+            <span class="dragon" style="top:10%;left:10%">🐉</span>
+            <span class="dragon" style="top:20%;right:15%;animation-delay:1s">🦅</span>
+            <span class="dragon" style="bottom:30%;left:8%;animation-delay:2s">🦉</span>
+            <span class="dragon" style="top:15%;right:25%;animation-delay:3s">🐲</span>
+        </div>
+        <div class="hero-content">
+            <h1>龙域王国</h1>
+            <p class="subtitle">踏入奇幻大陆，成为传说中的龙骑士</p>
+            <button class="cta-btn">立即开始冒险</button>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature-card">
+            <div class="feature-icon">⚔️</div>
+            <h3>史诗战斗系统</h3>
+            <p>体验前所未有的战斗快感，百种技能自由组合</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🏰</div>
+            <h3>建设王国</h3>
+            <p>打造属于你的城堡，招募忠诚的骑士团</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🐉</div>
+            <h3>驯服巨龙</h3>
+            <p>寻找传说中的龙蛋，孵化并驯服你的龙伙伴</p>
+        </div>
+    </section>
+
+    <section class="screenshot-gallery">
+        <h2 class="gallery-title">游戏截图</h2>
+        <div class="gallery">
+            <div class="gallery-item">🏰</div>
+            <div class="gallery-item">⚔️</div>
+            <div class="gallery-item">🐉</div>
+            <div class="gallery-item">🌈</div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <h2>立即下载体验</h2>
+        <div class="download-buttons">
+            <button class="download-btn">Windows</button>
+            <button class="download-btn">macOS</button>
+            <button class="download-btn">Linux</button>
+            <button class="download-btn">iOS</button>
+            <button class="download-btn">Android</button>
+        </div>
+    </footer>
+</body>
+</html>

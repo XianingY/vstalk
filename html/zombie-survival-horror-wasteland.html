@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>废土求生 - 僵尸末日生存</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Impact', sans-serif;
+            background: #1a1a1a;
+            color: #8b0000;
+            overflow-x: hidden;
+        }
+        .hero {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at center, #2d1b1b 0%, #0a0a0a 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .blood-moon {
+            position: absolute;
+            top: 10%;
+            right: 20%;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle at 30% 30%, #ff4444, #8b0000);
+            border-radius: 50%;
+            box-shadow: 0 0 60px #ff0000;
+            animation: bloodPulse 4s infinite;
+        }
+        @keyframes bloodPulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+        }
+        h1 {
+            font-size: 6em;
+            color: #8b0000;
+            text-shadow: 0 0 20px #ff0000, 0 0 40px #8b0000;
+            letter-spacing: 10px;
+            animation: flicker 3s infinite;
+        }
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            92% { opacity: 0.8; }
+            94% { opacity: 1; }
+            96% { opacity: 0.9; }
+        }
+        .subtitle {
+            font-size: 1.5em;
+            color: #666;
+            margin: 30px 0;
+            font-family: 'Arial', sans-serif;
+        }
+        .cta-btn {
+            padding: 20px 60px;
+            background: linear-gradient(45deg, #8b0000, #ff0000);
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+            transition: all 0.3s;
+        }
+        .cta-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px #ff0000;
+        }
+        .fog {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4"/><feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.05"/></svg>');
+            pointer-events: none;
+            z-index: 5;
+        }
+        .survival-tips {
+            padding: 80px 50px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .tip-card {
+            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+            border-left: 5px solid #8b0000;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        .tip-card::before {
+            content: '☠️';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 5em;
+            opacity: 0.1;
+        }
+        .tip-card h3 {
+            font-size: 1.8em;
+            color: #ff4444;
+            margin-bottom: 15px;
+        }
+        .tip-card p {
+            color: #999;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+        }
+        .infected-zone {
+            padding: 100px 50px;
+            background: #0f0f0f;
+            text-align: center;
+        }
+        .zone-display {
+            width: 100%;
+            max-width: 1000px;
+            height: 300px;
+            margin: 40px auto;
+            background: repeating-linear-gradient(
+                90deg,
+                #1a1a1a,
+                #1a1a1a 20px,
+                #2a2a2a 20px,
+                #2a2a2a 40px
+            );
+            border: 3px solid #8b0000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6em;
+        }
+        .footer {
+            padding: 60px;
+            text-align: center;
+            background: #050505;
+        }
+        .survive-btn {
+            display: inline-block;
+            padding: 20px 50px;
+            background: #8b0000;
+            color: white;
+            text-decoration: none;
+            font-size: 1.3em;
+            margin: 10px;
+            border: 2px solid #ff0000;
+            transition: all 0.3s;
+        }
+        .survive-btn:hover {
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="fog"></div>
+
+    <section class="hero">
+        <div class="blood-moon"></div>
+        <div class="hero-content">
+            <h1>废土求生</h1>
+            <p class="subtitle">僵尸围城，物资匮乏，你还能活多久？</p>
+            <button class="cta-btn">🔪 立即求生</button>
+        </div>
+    </section>
+
+    <section class="survival-tips">
+        <div class="tip-card">
+            <h3>🏠 寻找庇护所</h3>
+            <p>在废弃的城市中寻找安全的藏身之处，建立你的末日根据地。记住，窗户是最容易被突破的弱点。</p>
+        </div>
+        <div class="tip-card">
+            <h3>🔧 收集资源</h3>
+            <p>弹药、食物、医疗用品都是稀缺资源。每一次外出都是赌博，权衡利弊再做决定。</p>
+        </div>
+        <div class="tip-card">
+            <h3>🤝 结识幸存者</h3>
+            <p>其他幸存者可能是盟友也可能是威胁。组建你的队伍，但永远保持警惕。</p>
+        </div>
+    </section>
+
+    <section class="infected-zone">
+        <h2 style="font-size: 3em; color: #8b0000;">感染区域预览</h2>
+        <div class="zone-display">🧟</div>
+    </section>
+
+    <footer class="footer">
+        <h2 style="font-size: 2.5em; margin-bottom: 30px;">准备好幸存了吗？</h2>
+        <a href="#" class="survive-btn">Steam 下载</a>
+        <a href="#" class="survive-btn">Epic 商店</a>
+        <a href="#" class="survive-btn">主机版</a>
+    </footer>
+</body>
+</html>

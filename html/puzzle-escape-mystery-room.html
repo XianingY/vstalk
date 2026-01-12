@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>谜屋逃脱 - 烧脑解谜冒险</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Georgia', serif;
+            background: #1a1a1a;
+            color: #d4af37;
+            overflow-x: hidden;
+        }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background:
+                radial-gradient(ellipse at center, #2a2a2a 0%, #0a0a0a 100%);
+            position: relative;
+        }
+        .keyhole {
+            width: 120px;
+            height: 180px;
+            background: #000;
+            border-radius: 60px 60px 0 0;
+            position: relative;
+            margin-bottom: 40px;
+            animation: keyholeGlow 3s infinite;
+        }
+        .keyhole::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 80px;
+            background: #000;
+            border-radius: 0 0 30px 30px;
+        }
+        @keyframes keyholeGlow {
+            0%, 100% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.3); }
+            50% { box-shadow: 0 0 60px rgba(212, 175, 55, 0.6); }
+        }
+        .hero-content {
+            text-align: center;
+        }
+        h1 {
+            font-size: 4em;
+            color: #d4af37;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+            margin-bottom: 20px;
+        }
+        .subtitle {
+            font-size: 1.3em;
+            color: #888;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+        .mystery-quote {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            padding: 30px;
+            border: 1px solid #333;
+            background: rgba(212, 175, 55, 0.05);
+            font-style: italic;
+            line-height: 1.8;
+        }
+        .cta-btn {
+            padding: 18px 50px;
+            background: transparent;
+            border: 2px solid #d4af37;
+            color: #d4af37;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s;
+            letter-spacing: 2px;
+        }
+        .cta-btn:hover {
+            background: #d4af37;
+            color: #1a1a1a;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+        .rooms {
+            padding: 80px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .rooms h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: #d4af37;
+        }
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        .room-card {
+            background: #222;
+            border: 1px solid #333;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        .room-card:hover {
+            transform: scale(1.03);
+            border-color: #d4af37;
+        }
+        .room-image {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            background: linear-gradient(180deg, #1a1a1a, #0a0a0a);
+        }
+        .room-details {
+            padding: 20px;
+            text-align: center;
+        }
+        .room-details h3 {
+            color: #d4af37;
+            margin-bottom: 10px;
+        }
+        .room-details p {
+            color: #666;
+            font-size: 0.9em;
+        }
+        .difficulty {
+            display: inline-block;
+            padding: 5px 15px;
+            margin-top: 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+        }
+        .easy { background: #1b5e20; color: #a5d6a7; }
+        .medium { background: #e65100; color: #ffcc80; }
+        .hard { background: #b71c1c; color: #ef9a9a; }
+        .expert { background: #4a148c; color: #ce93d8; }
+        .clues-section {
+            padding: 80px 50px;
+            background: #0a0a0a;
+        }
+        .clues-section h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 40px;
+        }
+        .clue-display {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px;
+            background: #1a1a1a;
+            border: 1px dashed #d4af37;
+            text-align: center;
+            font-size: 1.5em;
+            color: #888;
+        }
+        .footer {
+            padding: 60px;
+            text-align: center;
+            background: #050505;
+        }
+        .start-btn {
+            display: inline-block;
+            padding: 20px 60px;
+            background: #d4af37;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="keyhole"></div>
+        <div class="hero-content">
+            <h1>谜屋逃脱</h1>
+            <p class="subtitle">每一扇门背后，都藏着一个秘密</p>
+            <div class="mystery-quote">
+                "当你凝视深渊时，深渊也在凝视你。<br>
+                但在这个房间里，你必须直面恐惧，<br>
+                用智慧点亮希望的灯光。"
+            </div>
+            <button class="cta-btn">🔐 尝试逃脱</button>
+        </div>
+    </section>
+
+    <section class="rooms">
+        <h2>经典密室</h2>
+        <div class="room-grid">
+            <div class="room-card">
+                <div class="room-image">🗝️</div>
+                <div class="room-details">
+                    <h3>古老的书房</h3>
+                    <p>被遗忘的学者留下了最后的线索</p>
+                    <span class="difficulty medium">中等难度</span>
+                </div>
+            </div>
+            <div class="room-card">
+                <div class="room-image">⚗️</div>
+                <div class="room-details">
+                    <h3>炼金术实验室</h3>
+                    <p>危险的药剂和隐藏的通道</p>
+                    <span class="difficulty hard">困难</span>
+                </div>
+            </div>
+            <div class="room-card">
+                <div class="room-image">🎭</div>
+                <div class="room-details">
+                    <h3>废弃剧场</h3>
+                    <p>舞台上的表演从未停止</p>
+                    <span class="difficulty expert">专家</span>
+                </div>
+            </div>
+            <div class="room-card">
+                <div class="room-image">🌙</div>
+                <div class="room-details">
+                    <h3>月光别墅</h3>
+                    <p>吸血鬼的遗产等待继承</p>
+                    <span class="difficulty hard">困难</span>
+                </div>
+            </div>
+            <div class="room-card">
+                <div class="room-image">🔮</div>
+                <div class="room-details">
+                    <h3>占星塔楼</h3>
+                    <p>星空指向唯一的出路</p>
+                    <span class="difficulty medium">中等难度</span>
+                </div>
+            </div>
+            <div class="room-card">
+                <div class="room-image">🚂</div>
+                <div class="room-details">
+                    <h3>失落的火车</h3>
+                    <p>在时间的轨道上寻找生机</p>
+                    <span class="difficulty easy">简单</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="clues-section">
+        <h2>今日线索</h2>
+        <div class="clue-display">
+            🔍 "当数字与星辰相遇，真相将从阴影中浮现"
+            <br><br>
+            <small style="color: #666;">提示：观察墙上的古老时钟与星图的对应关系</small>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <h2 style="color: #d4af37; margin-bottom: 30px;">准备好解开谜题了吗？</h2>
+        <a href="#" class="start-btn">开始游戏</a>
+        <a href="#" class="start-btn" style="background: transparent; border: 2px solid #d4af37;">查看攻略</a>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>节奏大师 - 音乐节奏游戏</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Arial Black', sans-serif;
+            background: linear-gradient(135deg, #1a0a1a 0%, #0a0a1a 50%, #1a0a1a 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        .equalizer {
+            position: absolute;
+            display: flex;
+            gap: 5px;
+            align-items: flex-end;
+            height: 200px;
+        }
+        .bar {
+            width: 15px;
+            background: linear-gradient(180deg, #ff00ff, #00ffff);
+            animation: equalize 0.5s ease-in-out infinite;
+        }
+        @keyframes equalize {
+            0%, 100% { height: 20%; }
+            50% { height: 100%; }
+        }
+        .music-note {
+            font-size: 100px;
+            animation: noteFloat 2s ease-in-out infinite;
+        }
+        @keyframes noteFloat {
+            0%, 100% { transform: rotate(-10deg) translateY(0); }
+            50% { transform: rotate(10deg) translateY(-20px); }
+        }
+        h1 {
+            font-size: 4em;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s linear infinite;
+            background-size: 200%;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0%; }
+            100% { background-position: 200%; }
+        }
+        .subtitle {
+            font-size: 1.4em;
+            color: #00ffff;
+            margin: 20px 0 35px;
+        }
+        .cta-btn {
+            padding: 20px 60px;
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .cta-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(255, 0, 255, 0.6);
+        }
+        .songs-showcase {
+            padding: 80px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .songs-showcase h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 50px;
+            color: #00ffff;
+        }
+        .song-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+        .song-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(0,255,255,0.3);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .song-card:hover {
+            background: rgba(0,255,255,0.1);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0,255,255,0.3);
+        }
+        .song-cover {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+        .song-title {
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .song-artist {
+            color: #888;
+            font-size: 0.9em;
+        }
+        .difficulty-mode {
+            padding: 80px 50px;
+            background: rgba(0,0,0,0.3);
+        }
+        .difficulty-mode h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 40px;
+        }
+        .difficulty-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .difficulty {
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .difficulty.easy { background: rgba(76, 175, 80, 0.2); border: 2px solid #4caf50; }
+        .difficulty.normal { background: rgba(255, 193, 7, 0.2); border: 2px solid #ffc107; }
+        .difficulty.hard { background: rgba(255, 87, 34, 0.2); border: 2px solid #ff5722; }
+        .difficulty.expert { background: rgba(244, 67, 54, 0.2); border: 2px solid #f44336; }
+        .diff-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        .difficulty h3 {
+            margin-bottom: 10px;
+        }
+        .leaderboard {
+            padding: 80px 50px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .leaderboard h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 40px;
+            color: #ff00ff;
+        }
+        .score-row {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+        .rank {
+            font-size: 1.5em;
+            font-weight: bold;
+            width: 50px;
+            color: #ffd700;
+        }
+        .player {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .player-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .score {
+            color: #00ffff;
+            font-weight: bold;
+        }
+        .footer {
+            padding: 50px;
+            text-align: center;
+            background: #050510;
+        }
+        .platforms {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        .platform {
+            padding: 12px 30px;
+            border: 2px solid #ff00ff;
+            color: #ff00ff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .platform:hover {
+            background: #ff00ff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div style="position:absolute;left:10%;top:20%;">
+            <div class="equalizer">
+                <div class="bar" style="animation-delay:0s"></div>
+                <div class="bar" style="animation-delay:0.1s"></div>
+                <div class="bar" style="animation-delay:0.2s"></div>
+                <div class="bar" style="animation-delay:0.3s"></div>
+                <div class="bar" style="animation-delay:0.4s"></div>
+            </div>
+        </div>
+        <div class="music-note">🎵</div>
+        <h1>节奏大师</h1>
+        <p class="subtitle">跟上节拍，挑战极限！</p>
+        <button class="cta-btn">🎶 开始演奏</button>
+    </section>
+
+    <section class="songs-showcase">
+        <h2>热门歌曲</h2>
+        <div class="song-grid">
+            <div class="song-card">
+                <div class="song-cover">🎸</div>
+                <div class="song-title">摇滚风暴</div>
+                <div class="song-artist">Rock Band</div>
+            </div>
+            <div class="song-card">
+                <div class="song-cover">🎹</div>
+                <div class="song-title">钢琴诗人</div>
+                <div class="song-artist">Classic Master</div>
+            </div>
+            <div class="song-card">
+                <div class="song-cover">🎤</div>
+                <div class="song-title">流行节拍</div>
+                <div class="song-artist">Pop Star</div>
+            </div>
+            <div class="song-card">
+                <div class="song-cover">💃</div>
+                <div class="song-title">电子狂潮</div>
+                <div class="song-artist">DJ Max</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="difficulty-mode">
+        <h2>难度选择</h2>
+        <div class="difficulty-grid">
+            <div class="difficulty easy">
+                <div class="diff-icon">🟢</div>
+                <h3>简单</h3>
+                <p>入门体验</p>
+            </div>
+            <div class="difficulty normal">
+                <div class="diff-icon">🟡</div>
+                <h3>普通</h3>
+                <p>常规挑战</p>
+            </div>
+            <div class="difficulty hard">
+                <div class="diff-icon">🟠</div>
+                <h3>困难</h3>
+                <p>高手进阶</p>
+            </div>
+            <div class="difficulty expert">
+                <div class="diff-icon">🔴</div>
+                <h3>专家</h3>
+                <p>极限操作</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="leaderboard">
+        <h2>排行榜</h2>
+        <div class="score-row">
+            <span class="rank">🥇</span>
+            <div class="player"><div class="player-avatar">🎵</div><span>节奏之神</span></div>
+            <span class="score">999,999</span>
+        </div>
+        <div class="score-row">
+            <span class="rank">🥈</span>
+            <div class="player"><div class="player-avatar">🎶</div><span>音游达人</span></div>
+            <span class="score">888,888</span>
+        </div>
+        <div class="score-row">
+            <span class="rank">🥉</span>
+            <div class="player"><div class="player-avatar">🎼</div><span>节拍大师</span></div>
+            <span class="score">777,777</span>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <h2 style="color: #ff00ff;">跟随节奏舞动</h2>
+        <div class="platforms">
+            <span class="platform">iOS</span>
+            <span class="platform">Android</span>
+            <span class="platform">街机</span>
+        </div>
+    </footer>
+</body>
+</html>

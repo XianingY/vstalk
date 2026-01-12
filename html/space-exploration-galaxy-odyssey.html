@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星际远征 - 宇宙探索策略游戏</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #0a0a1a;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+        .hero {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at center, #1a1a3a 0%, #000 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .stars {
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(1px 1px at 20px 30px, #fff, transparent),
+                radial-gradient(1px 1px at 80px 70px, rgba(255,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 150px 140px, rgba(255,255,255,0.9), transparent);
+            background-size: 200px 100px;
+            animation: twinkle 5s infinite;
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+        .planet {
+            font-size: 120px;
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        h1 {
+            font-size: 3.5em;
+            margin: 20px 0;
+            background: linear-gradient(135deg, #64b5f6, #e040fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            font-size: 1.2em;
+            color: #888;
+            margin-bottom: 30px;
+        }
+        .cta-btn {
+            padding: 15px 50px;
+            background: linear-gradient(135deg, #64b5f6, #1976d2);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .cta-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(100, 181, 246, 0.5);
+        }
+        .features {
+            padding: 80px 50px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .feature {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 15px;
+            transition: all 0.3s;
+        }
+        .feature:hover {
+            background: rgba(255,255,255,0.08);
+            transform: translateY(-5px);
+        }
+        .feature-icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        .feature h3 {
+            color: #64b5f6;
+            margin-bottom: 10px;
+        }
+        .galaxy {
+            padding: 80px 50px;
+            background: linear-gradient(180deg, #000, #0a0a1a);
+        }
+        .galaxy h2 {
+            text-align: center;
+            font-size: 2em;
+            margin-bottom: 40px;
+            color: #e040fb;
+        }
+        .systems {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .system {
+            background: rgba(100, 181, 246, 0.1);
+            border: 1px solid rgba(100, 181, 246, 0.3);
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .system:hover {
+            background: rgba(100, 181, 246, 0.2);
+            transform: scale(1.05);
+        }
+        .footer {
+            padding: 50px;
+            text-align: center;
+            background: #050510;
+        }
+        .platforms {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .platform {
+            padding: 10px 25px;
+            border: 1px solid #64b5f6;
+            color: #64b5f6;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .platform:hover {
+            background: #64b5f6;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="stars"></div>
+        <div class="hero-content">
+            <div class="planet">🪐</div>
+            <h1>星际远征</h1>
+            <p class="subtitle">征服星系，建立你的星际帝国</p>
+            <button class="cta-btn">🚀 立即启航</button>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <div class="feature-icon">🛠️</div>
+            <h3>建造舰队</h3>
+            <p>设计你的星际战舰</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🤝</div>
+            <h3>外交谈判</h3>
+            <p>与其他文明建交</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">⚔️</div>
+            <h3>太空战争</h3>
+            <p>指挥星际战役</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🔬</div>
+            <h3>科技研究</h3>
+            <p>解锁先进科技</p>
+        </div>
+    </section>
+
+    <section class="galaxy">
+        <h2>探索未知星系</h2>
+        <div class="systems">
+            <div class="system">☀️ 太阳系</div>
+            <div class="system">🔴 红色星球</div>
+            <div class="system">💜 星云带</div>
+            <div class="system">💎 钻石星</div>
+            <div class="system">⚫ 黑洞区</div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <h2>开始星际征程</h2>
+        <div class="platforms">
+            <span class="platform">PC</span>
+            <span class="platform">Mac</span>
+            <span class="platform">移动端</span>
+        </div>
+    </footer>
+</body>
+</html>

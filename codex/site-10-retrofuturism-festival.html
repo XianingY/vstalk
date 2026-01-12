@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Neon Drift - Retro Futurism Festival</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0b0b18;
+      --bg-2: #1a1a2e;
+      --neon-blue: #0080ff;
+      --neon-pink: #ff006e;
+      --neon-cyan: #00ffff;
+      --text: #f4f4ff;
+      --muted: #a7a7d0;
+      --font-heading: "Orbitron", sans-serif;
+      --font-body: "Space Mono", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--text);
+      background: radial-gradient(900px 400px at 20% 20%, rgba(0, 128, 255, 0.2), transparent 60%),
+        radial-gradient(600px 500px at 80% 10%, rgba(255, 0, 110, 0.2), transparent 60%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body:before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0.04),
+        rgba(255, 255, 255, 0.04) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      pointer-events: none;
+      mix-blend-mode: screen;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 36px 24px 90px;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    header nav {
+      display: flex;
+      gap: 16px;
+    }
+
+    header a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .hero {
+      margin-top: 46px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+      align-items: center;
+    }
+
+    h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      margin: 0 0 16px;
+      text-shadow: 0 0 20px rgba(0, 255, 255, 0.4), 0 0 40px rgba(255, 0, 110, 0.4);
+    }
+
+    p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .ticket {
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: 2px solid var(--neon-cyan);
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .lineup {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      border: 1px solid rgba(0, 255, 255, 0.35);
+      background: rgba(11, 11, 24, 0.75);
+      padding: 16px;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--neon-pink);
+      color: #0b0b18;
+      padding: 4px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    .reveal {
+      animation: neonIn 0.7s ease-out both;
+      animation-delay: var(--d, 0s);
+    }
+
+    @keyframes neonIn {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="reveal" style="--d: 0.05s;">
+      <span>Neon Drift</span>
+      <nav>
+        <a href="#lineup">Lineup</a>
+        <a href="#stages">Stages</a>
+        <a href="#tickets">Tickets</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="reveal" style="--d: 0.1s;">
+        <h1>Signal the future. Dance the afterglow.</h1>
+        <p>A three-night synthwave festival built on neon grids, holographic projections, and live analog machines.</p>
+        <button class="ticket">Reserve pass</button>
+      </div>
+      <div class="reveal" style="--d: 0.2s;">
+        <div class="card">
+          <span class="tag">Stage Atlas</span>
+          <p>Orbit Dome | 21:40 | Main stream</p>
+        </div>
+        <div class="card" style="margin-top: 12px;">
+          <span class="tag" style="background: var(--neon-cyan); color: #081019;">Late Set</span>
+          <p>Chromatek | 00:30 | Sub-bass vault</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="lineup" id="lineup">
+      <article class="card reveal" style="--d: 0.15s;">
+        <h3>Vektor Echo</h3>
+        <p>Melodic synth and laser harp.</p>
+      </article>
+      <article class="card reveal" style="--d: 0.2s;">
+        <h3>Neon Static</h3>
+        <p>Analog drum machines and neon visuals.</p>
+      </article>
+      <article class="card reveal" style="--d: 0.25s;">
+        <h3>Chromatek</h3>
+        <p>Deep wave distortion sets.</p>
+      </article>
+    </section>
+  </div>
+</body>
+</html>

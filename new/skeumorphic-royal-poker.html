@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROYAL POKER - 皇家扑克</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cinzel:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --wood-dark: #2c1810;
+            --wood-medium: #4a3728;
+            --wood-light: #6b4423;
+            --felt-green: #1a5c3a;
+            --felt-dark: #0d3d25;
+            --gold: #d4af37;
+            --gold-light: #f4d160;
+            --gold-shadow: #996515;
+            --card-white: #f8f4e8;
+            --card-back: #1a3a5c;
+        }
+
+        body {
+            font-family: 'Playfair Display', Georgia, serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2c2c2c 50%, #1a1a1a 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* WOOD TEXTURE BACKGROUND */
+        .wood-bg {
+            background:
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect fill="%232c1810" width="100" height="100"/><path stroke="%233a2015" stroke-width="0.5" d="M0 10h100M0 30h100M0 50h100M0 70h90M0 90h100"/></svg>');
+            min-height: 100vh;
+        }
+
+        /* WOODEN FRAME */
+        .frame-border {
+            border: 24px solid var(--wood-medium);
+            border-image: linear-gradient(135deg, var(--wood-dark), var(--wood-light), var(--wood-dark)) 1;
+            box-shadow:
+                inset 0 0 20px rgba(0,0,0,0.5),
+                0 10px 40px rgba(0,0,0,0.8),
+                0 0 0 4px var(--gold);
+            margin: 24px;
+            background: var(--felt-green);
+            min-height: calc(100vh - 48px);
+            position: relative;
+        }
+
+        /* HEADER */
+        header {
+            text-align: center;
+            padding: 32px 48px;
+            border-bottom: 4px solid var(--gold);
+            background: linear-gradient(180deg, var(--wood-dark), var(--wood-medium));
+        }
+
+        .logo-shield {
+            width: 80px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            margin: 0 auto 16px;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow:
+                0 4px 20px rgba(0,0,0,0.5),
+                inset 0 2px 10px rgba(255,255,255,0.3);
+        }
+
+        header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-shadow:
+                2px 2px 4px rgba(0,0,0,0.8),
+                0 0 30px rgba(212, 175, 55, 0.5);
+            letter-spacing: 4px;
+        }
+
+        header p {
+            color: rgba(255,255,255,0.6);
+            font-style: italic;
+            margin-top: 8px;
+        }
+
+        /* POKER TABLE */
+        .poker-table {
+            margin: 48px auto;
+            max-width: 900px;
+            background: radial-gradient(ellipse at center, var(--felt-green) 0%, var(--felt-dark) 100%);
+            border-radius: 200px;
+            padding: 60px;
+            position: relative;
+            box-shadow:
+                inset 0 0 100px rgba(0,0,0,0.5),
+                0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .table-border {
+            border: 8px solid var(--wood-light);
+            border-radius: 180px;
+            padding: 48px;
+            position: relative;
+        }
+
+        .dealer-area {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .deck {
+            width: 100px;
+            height: 140px;
+            background: linear-gradient(135deg, var(--card-back), #0a2030);
+            border-radius: 8px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow:
+                4px 4px 10px rgba(0,0,0,0.5),
+                -2px -2px 5px rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .deck::before {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 6px;
+        }
+
+        .deck-stack {
+            position: absolute;
+            width: 90px;
+            height: 130px;
+            background: var(--card-back);
+            border-radius: 6px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .community-cards {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 32px 0;
+        }
+
+        /* REALISTIC CARDS */
+        .card {
+            width: 80px;
+            height: 112px;
+            background: linear-gradient(135deg, var(--card-white), #e8e0d0);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow:
+                3px 3px 8px rgba(0,0,0,0.4),
+                -1px -1px 3px rgba(255,255,255,0.5);
+            position: relative;
+        }
+
+        .card.red { color: #c41e3a; }
+        .card.black { color: #1a1a1a; }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 6px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .card.red::before { content: '♦'; }
+        .card.black::before { content: '♠'; }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            right: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            transform: rotate(180deg);
+        }
+
+        .card.red::after { content: '♦'; }
+        .card.black::after { content: '♠'; }
+
+        /* PLAYERS */
+        .players {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .player {
+            text-align: center;
+        }
+
+        .player-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.5),
+                inset 0 2px 5px rgba(255,255,255,0.4);
+            border: 3px solid var(--gold-shadow);
+        }
+
+        .player-name {
+            font-weight: bold;
+            color: var(--gold);
+            margin-bottom: 4px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .player-chips {
+            font-size: 14px;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .player-hand {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 12px;
+        }
+
+        .player-hand .card {
+            width: 50px;
+            height: 70px;
+            font-size: 16px;
+        }
+
+        /* INFO PANELS */
+        .info-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            padding: 48px;
+            background: linear-gradient(180deg, var(--wood-medium), var(--wood-dark));
+            border-top: 4px solid var(--gold);
+        }
+
+        .info-panel {
+            background: linear-gradient(135deg, var(--wood-light), var(--wood-medium));
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            box-shadow:
+                inset 0 2px 5px rgba(255,255,255,0.1),
+                0 4px 10px rgba(0,0,0,0.3);
+            border: 2px solid var(--wood-dark);
+        }
+
+        .info-panel h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+
+        .info-panel p {
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* GOLD BUTTON */
+        .btn-gold {
+            display: inline-block;
+            padding: 16px 48px;
+            background: linear-gradient(180deg, var(--gold-light), var(--gold));
+            border: 3px solid var(--gold-shadow);
+            border-radius: 8px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--wood-dark);
+            text-shadow: 1px 1px 0 rgba(255,255,255,0.3);
+            cursor: pointer;
+            box-shadow:
+                0 6px 20px rgba(0,0,0,0.5),
+                inset 0 2px 5px rgba(255,255,255,0.4);
+            transition: all 0.3s;
+            margin: 32px auto;
+            display: block;
+            width: fit-content;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 8px 25px rgba(0,0,0,0.6),
+                inset 0 2px 5px rgba(255,255,255,0.4);
+            background: linear-gradient(180deg, var(--gold), var(--gold-light));
+        }
+
+        /* FEATURES */
+        .features {
+            padding: 48px;
+            background: var(--wood-dark);
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.3s;
+        }
+
+        .feature:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
+        }
+
+        .feature h4 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+
+        .feature p {
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--wood-dark);
+            padding: 32px 48px;
+            text-align: center;
+            border-top: 4px solid var(--gold);
+        }
+
+        .footer-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 16px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .footer-text {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+        }
+
+        .age-warning {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #1a1a1a;
+            border: 2px solid #444;
+            border-radius: 4px;
+            font-size: 11px;
+            color: #888;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 900px) {
+            .frame-border {
+                margin: 12px;
+                border-width: 12px;
+            }
+            .poker-table {
+                margin: 24px auto;
+                padding: 32px;
+            }
+            .info-section {
+                grid-template-columns: 1fr;
+            }
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .players {
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wood-bg">
+        <div class="frame-border">
+            <header>
+                <div class="logo-shield">♠</div>
+                <h1>ROYAL POKER</h1>
+                <p>，体验皇室尊贵博彩体验</p>
+            </header>
+
+            <div class="poker-table">
+                <div class="table-border">
+                    <div class="dealer-area">
+                        <div class="deck">
+                            <div class="deck-stack"></div>
+                            <div class="deck-stack" style="left: 6px; top: 6px;"></div>
+                            <span style="color: rgba(255,255,255,0.3); font-size: 12px;">DECK</span>
+                        </div>
+                    </div>
+
+                    <div class="community-cards">
+                        <div class="card red">A</div>
+                        <div class="card black">K</div>
+                        <div class="card red">10</div>
+                        <div class="card black">7</div>
+                        <div class="card red">3</div>
+                    </div>
+
+                    <div class="players">
+                        <div class="player">
+                            <div class="player-avatar">👨</div>
+                            <div class="player-name">皇家贵族</div>
+                            <div class="player-chips">💰 50,000</div>
+                            <div class="player-hand">
+                                <div class="card red">Q</div>
+                                <div class="card black">J</div>
+                            </div>
+                        </div>
+                        <div class="player">
+                            <div class="player-avatar">👩</div>
+                            <div class="player-name">幸运女神</div>
+                            <div class="player-chips">💰 75,000</div>
+                            <div class="player-hand">
+                                <div class="card black">A</div>
+                                <div class="card black">A</div>
+                            </div>
+                        </div>
+                        <div class="player">
+                            <div class="player-avatar">🧔</div>
+                            <div class="player-name">牌桌老手</div>
+                            <div class="player-chips">💰 32,500</div>
+                            <div class="player-hand">
+                                <div class="card red">K</div>
+                                <div class="card red">K</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-gold">🎰 开始发牌 🎰</button>
+
+            <section class="info-section">
+                <div class="info-panel">
+                    <h3>♠ 游戏玩法</h3>
+                    <p>经典德州扑克规则，简单易上手。多种玩法模式，任您选择。</p>
+                </div>
+                <div class="info-panel">
+                    <h3>♦ 公平公正</h3>
+                    <p>采用国际认证随机算法，确保每一局游戏的公平性与公正性。</p>
+                </div>
+                <div class="info-panel">
+                    <h3>♠ 丰厚奖励</h3>
+                    <p>新手礼包、每日签到、邀请好友，多重奖励等您来拿！</p>
+                </div>
+            </section>
+
+            <section class="features">
+                <div class="feature">
+                    <div class="feature-icon">🎴</div>
+                    <h4>精美牌面</h4>
+                    <p>3D写实风格</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💎</div>
+                    <h4>VIP专属</h4>
+                    <p>尊贵会员特权</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🏆</div>
+                    <h4>赛事系统</h4>
+                    <p>每日锦标赛</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🌍</div>
+                    <h4>全球对战</h4>
+                    <p>真人对战</p>
+                </div>
+            </section>
+
+            <footer>
+                <div class="footer-logo">♠ ROYAL POKER ♣</div>
+                <p class="footer-text">© 2024 ROYAL GAMES. 保留所有权利。</p>
+                <div class="age-warning">18+ | 适度游戏 | 理性博彩</div>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>

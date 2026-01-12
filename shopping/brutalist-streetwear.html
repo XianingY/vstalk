@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STREET // 街头潮流</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --red: #ff0000;
+            --yellow: #ffff00;
+            --blue: #0000ff;
+        }
+
+        body {
+            font-family: 'Arial Black', 'Helvetica Neue', sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1;
+            overflow-x: hidden;
+        }
+
+        /* HEADER */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 48px;
+            z-index: 100;
+            background: var(--white);
+            border-bottom: 4px solid var(--black);
+        }
+
+        .logo {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+        }
+
+        nav {
+            display: flex;
+            gap: 32px;
+        }
+
+        nav a {
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--black);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav a:hover {
+            border-bottom-color: var(--red);
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            font-weight: 900;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 120px 48px 48px;
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .hero-title {
+            font-size: clamp(4rem, 18vw, 16rem);
+            font-weight: 900;
+            line-height: 0.8;
+            letter-spacing: -0.08em;
+        }
+
+        .hero-title .line-1 {
+            display: block;
+            color: var(--white);
+        }
+
+        .hero-title .line-2 {
+            display: block;
+            color: var(--yellow);
+        }
+
+        .hero-title .line-3 {
+            display: block;
+            color: transparent;
+            -webkit-text-stroke: 3px var(--white);
+        }
+
+        .collection-tag {
+            display: inline-block;
+            margin-top: 48px;
+            padding: 16px 32px;
+            background: var(--red);
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* CTA BUTTON */
+        .cta-btn {
+            display: inline-block;
+            margin-top: 32px;
+            padding: 24px 64px;
+            background: var(--white);
+            color: var(--black);
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: 900;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: transform 0.15s;
+        }
+
+        .cta-btn:hover {
+            transform: translate(-6px, -6px);
+            box-shadow: 6px 6px 0 var(--red);
+        }
+
+        /* MARQUEE */
+        .marquee {
+            background: var(--yellow);
+            color: var(--black);
+            padding: 20px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            border-bottom: 4px solid var(--black);
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: scroll 10s linear infinite;
+        }
+
+        .marquee-content span {
+            font-size: 32px;
+            font-weight: 900;
+            margin-right: 64px;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* PRODUCTS GRID */
+        .products-section {
+            padding: 100px 48px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 64px;
+            border-bottom: 4px solid var(--black);
+            padding-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 900;
+        }
+
+        .product-count {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+        }
+
+        .product-card {
+            border: 4px solid var(--black);
+            border-right: none;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .product-card:last-child {
+            border-right: 4px solid var(--black);
+        }
+
+        .product-card:hover {
+            background: var(--yellow);
+        }
+
+        .product-image {
+            aspect-ratio: 3/4;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            border-bottom: 4px solid var(--black);
+        }
+
+        .product-info {
+            padding: 24px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--red);
+        }
+
+        .product-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--black);
+            color: var(--white);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-top: 12px;
+        }
+
+        /* CATEGORIES */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .category {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid var(--black);
+            border-right: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--black);
+        }
+
+        .category:last-child {
+            border-right: 4px solid var(--black);
+        }
+
+        .category:nth-child(1) { background: var(--red); color: var(--white); }
+        .category:nth-child(2) { background: var(--blue); color: var(--white); }
+        .category:nth-child(3) { background: var(--yellow); }
+        .category:nth-child(4) { background: var(--white); }
+
+        .category:hover {
+            transform: scale(0.95);
+        }
+
+        .category-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .category-name {
+            font-size: 18px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        /* PROMO BANNER */
+        .promo-banner {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+        }
+
+        .promo-main {
+            padding: 100px 48px;
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .promo-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 0.9;
+            margin-bottom: 24px;
+        }
+
+        .promo-title span {
+            color: var(--red);
+        }
+
+        .promo-subtitle {
+            font-size: 18px;
+            margin-bottom: 32px;
+            opacity: 0.7;
+        }
+
+        .promo-side {
+            background: var(--yellow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            border: 4px solid var(--black);
+            border-left: none;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 80px 48px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 64px;
+        }
+
+        .footer-brand h3 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            color: #888;
+            line-height: 1.6;
+        }
+
+        .footer-col h4 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+            color: #888;
+        }
+
+        .footer-col a {
+            display: block;
+            font-size: 14px;
+            color: var(--white);
+            text-decoration: none;
+            margin-bottom: 12px;
+        }
+
+        .footer-col a:hover {
+            color: var(--yellow);
+        }
+
+        .footer-bottom {
+            padding-top: 32px;
+            border-top: 2px solid #333;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 16px 24px; flex-wrap: wrap; gap: 12px; }
+            nav { display: none; }
+            .hero { padding: 100px 24px 24px; }
+            .products-grid { grid-template-columns: 1fr; }
+            .product-card { border-right: 4px solid var(--black); margin-bottom: 0; }
+            .categories { grid-template-columns: repeat(2, 1fr); }
+            .category { border-right: 4px solid var(--black); border-bottom: none; }
+            .category:nth-child(2) { border-right: none; }
+            .category:nth-child(3) { border-bottom: 4px solid var(--black); }
+            .category:nth-child(4) { border-bottom: 4px solid var(--black); border-right: none; }
+            .promo-banner { grid-template-columns: 1fr; }
+            .promo-side { border-left: 4px solid var(--black); border-top: none; height: 200px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">STREET</div>
+        <nav>
+            <a href="#">新品</a>
+            <a href="#">男装</a>
+            <a href="#">女装</a>
+            <a href="#">配饰</a>
+            <a href="#">sale</a>
+        </nav>
+        <div class="cart-icon">🛒 (0)</div>
+    </header>
+
+    <section class="hero">
+        <h1 class="hero-title">
+            <span class="line-1">NEW</span>
+            <span class="line-2">DROP</span>
+            <span class="line-3">2024</span>
+        </h1>
+        <div class="collection-tag">◆ 秋冬系列现已发售 ◆</div>
+        <br>
+        <a href="#" class="cta-btn">SHOP NOW →</a>
+    </section>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            <span>FREE SHIPPING</span>
+            <span>//</span>
+            <span>WORLDWIDE</span>
+            <span>//</span>
+            <span>LIMITED EDITION</span>
+            <span>//</span>
+            <span>STREETWEAR</span>
+            <span>//</span>
+            <span>FREE SHIPPING</span>
+            <span>//</span>
+            <span>WORLDWIDE</span>
+            <span>//</span>
+            <span>LIMITED EDITION</span>
+            <span>//</span>
+        </div>
+    </div>
+
+    <section class="products-section">
+        <div class="section-header">
+            <h2 class="section-title">热卖单品</h2>
+            <span class="product-count">12 件商品</span>
+        </div>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">👕</div>
+                <div class="product-info">
+                    <div class="product-name">Logo 印花T恤</div>
+                    <div class="product-price">¥299</div>
+                    <span class="product-tag">热卖</span>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">👖</div>
+                <div class="product-info">
+                    <div class="product-name">街头工装裤</div>
+                    <div class="product-price">¥599</div>
+                    <span class="product-tag">新品</span>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">🧥</div>
+                <div class="product-info">
+                    <div class="product-name"> Oversize 外套</div>
+                    <div class="product-price">¥899</div>
+                    <span class="product-tag">限量</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="categories">
+        <a href="#" class="category">
+            <div class="category-icon">👔</div>
+            <div class="category-name">男装</div>
+        </a>
+        <a href="#" class="category">
+            <div class="category-icon">👗</div>
+            <div class="category-name">女装</div>
+        </a>
+        <a href="#" class="category">
+            <div class="category-icon">👟</div>
+            <div class="category-name">球鞋</div>
+        </a>
+        <a href="#" class="category">
+            <div class="category-icon">🧢</div>
+            <div class="category-name">配饰</div>
+        </a>
+    </section>
+
+    <section class="promo-banner">
+        <div class="promo-main">
+            <h2 class="promo-title">
+                会员专属<br>
+                <span>5折</span> 起
+            </h2>
+            <p class="promo-subtitle">注册会员享首发特权，新品抢先购</p>
+            <a href="#" class="cta-btn">立即注册</a>
+        </div>
+        <div class="promo-side">💥</div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>STREET</h3>
+                <p>来自街头的潮流态度。限量发售，每一件都是独一无二的存在。</p>
+            </div>
+            <div class="footer-col">
+                <h4>购物</h4>
+                <a href="#">所有商品</a>
+                <a href="#">新品上架</a>
+                <a href="#">特惠专区</a>
+            </div>
+            <div class="footer-col">
+                <h4>帮助</h4>
+                <a href="#">配送说明</a>
+                <a href="#">退换政策</a>
+                <a href="#">尺码指南</a>
+            </div>
+            <div class="footer-col">
+                <h4>关注我们</h4>
+                <a href="#">Instagram</a>
+                <a href="#">小红书</a>
+                <a href="#">抖音</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2024 STREET CO.</span>
+            <span>隐私政策 / 使用条款</span>
+        </div>
+    </footer>
+</body>
+</html>

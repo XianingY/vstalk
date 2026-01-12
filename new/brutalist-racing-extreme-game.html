@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VELOCITY // 极速</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --yellow: #ffff00;
+            --cyan: #00ffff;
+            --magenta: #ff00ff;
+            --gray: #333333;
+        }
+
+        body {
+            font-family: 'Arial Black', 'Helvetica Neue', sans-serif;
+            background-color: var(--black);
+            color: var(--white);
+            line-height: 1;
+            overflow-x: hidden;
+        }
+
+        /* HEADER */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 48px;
+            z-index: 100;
+            mix-blend-mode: difference;
+        }
+
+        .logo {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            color: var(--white);
+        }
+
+        nav {
+            display: flex;
+            gap: 32px;
+        }
+
+        nav a {
+            font-size: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--white);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 120px 48px 48px;
+            position: relative;
+            background: var(--gray);
+        }
+
+        .hero-title {
+            font-size: clamp(4rem, 18vw, 16rem);
+            font-weight: 900;
+            line-height: 0.8;
+            letter-spacing: -0.08em;
+        }
+
+        .hero-title .line-1 {
+            display: block;
+            color: var(--white);
+        }
+
+        .hero-title .line-2 {
+            display: block;
+            color: var(--yellow);
+        }
+
+        .hero-title .line-3 {
+            display: block;
+            color: transparent;
+            -webkit-text-stroke: 4px var(--white);
+        }
+
+        .hero-title .line-4 {
+            display: block;
+            color: var(--cyan);
+        }
+
+        .speed-meter {
+            display: inline-block;
+            margin-top: 48px;
+            padding: 16px 32px;
+            background: var(--yellow);
+            color: var(--black);
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-weight: 900;
+            animation: meterPulse 0.5s infinite;
+        }
+
+        @keyframes meterPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* CTA BUTTON */
+        .cta-btn {
+            display: inline-block;
+            margin-top: 32px;
+            padding: 24px 72px;
+            background: var(--white);
+            color: var(--black);
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-weight: 900;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: transform 0.1s;
+        }
+
+        .cta-btn:hover {
+            transform: translate(-8px, -8px);
+            box-shadow: 8px 8px 0 var(--cyan);
+        }
+
+        /* MARQUEE */
+        .marquee {
+            background: var(--yellow);
+            color: var(--black);
+            padding: 24px 0;
+            overflow: hidden;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: scroll 10s linear infinite;
+        }
+
+        .marquee-content span {
+            font-size: 40px;
+            font-weight: 900;
+            margin-right: 64px;
+            letter-spacing: -0.02em;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* GRID 3x2 */
+        .grid-3x2 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .grid-item {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 48px;
+            border: 3px solid var(--black);
+            transition: all 0.15s;
+        }
+
+        .grid-item:nth-child(1) { background: var(--cyan); color: var(--black); }
+        .grid-item:nth-child(2) { background: var(--magenta); }
+        .grid-item:nth-child(3) { background: var(--white); color: var(--black); }
+        .grid-item:nth-child(4) { background: var(--yellow); color: var(--black); }
+        .grid-item:nth-child(5) { background: var(--black); border-color: var(--white); }
+        .grid-item:nth-child(6) { background: var(--gray); }
+
+        .grid-item:hover {
+            transform: scale(0.96);
+        }
+
+        .grid-num {
+            font-size: 80px;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .grid-label {
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* TEXT SECTION */
+        .text-section {
+            padding: 160px 48px;
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .text-section p {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            max-width: 1000px;
+        }
+
+        .text-section .highlight {
+            color: var(--yellow);
+            background: var(--black);
+            padding: 0 16px;
+        }
+
+        /* CAR SHOWCASE */
+        .cars-section {
+            padding: 100px 48px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 64px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+        }
+
+        .car-count {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #888;
+        }
+
+        .cars-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+        }
+
+        .car-card {
+            aspect-ratio: 3/4;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 32px;
+            border: 3px solid var(--black);
+            transition: all 0.2s;
+        }
+
+        .car-card:nth-child(1) { background: linear-gradient(135deg, #ff4444, #cc0000); }
+        .car-card:nth-child(2) { background: linear-gradient(135deg, #4444ff, #0000cc); }
+        .car-card:nth-child(3) { background: linear-gradient(135deg, #44ff44, #00cc00); }
+        .car-card:nth-child(4) { background: linear-gradient(135deg, #ffff44, #cccc00); }
+
+        .car-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .car-name {
+            font-size: 24px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .car-spec {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .car-spec span {
+            display: block;
+        }
+
+        /* STATS */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .stat-box {
+            padding: 64px 48px;
+            text-align: center;
+            border: 3px solid var(--black);
+        }
+
+        .stat-box:nth-child(1) { background: var(--cyan); }
+        .stat-box:nth-child(2) { background: var(--magenta); color: var(--white); }
+        .stat-box:nth-child(3) { background: var(--yellow); }
+        .stat-box:nth-child(4) { background: var(--white); }
+
+        .stat-value {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 16px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 80px 48px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 48px;
+            margin-bottom: 64px;
+        }
+
+        .footer-col h4 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 24px;
+            color: #666;
+        }
+
+        .footer-col a {
+            display: block;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--white);
+            text-decoration: none;
+            margin-bottom: 12px;
+        }
+
+        .footer-col a:hover {
+            color: var(--yellow);
+        }
+
+        .footer-bottom {
+            padding-top: 32px;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 16px 24px; flex-direction: column; gap: 12px; }
+            .hero { padding: 100px 24px 24px; }
+            .grid-3x2 { grid-template-columns: 1fr; }
+            .cars-grid { grid-template-columns: 1fr 1fr; }
+            .car-card { aspect-ratio: 1; }
+            .stats-section { grid-template-columns: 1fr 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .section-header { flex-direction: column; gap: 16px; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">VELOCITY</div>
+        <nav>
+            <a href="#">CARS</a>
+            <a href="#">TRACKS</a>
+            <a href="#">MULTIPLAYER</a>
+            <a href="#">DOWNLOAD</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1 class="hero-title">
+            <span class="line-1">PURE</span>
+            <span class="line-2">SPEED</span>
+            <span class="line-3">NO</span>
+            <span class="line-4">LIMITS</span>
+        </h1>
+
+        <div class="speed-meter">SPEED: 0 - 300 KM/H</div>
+
+        <a href="#" class="cta-btn">RACE NOW →</a>
+    </section>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            <span>DRIFT</span>
+            <span>//</span>
+            <span>NITRO</span>
+            <span>//</span>
+            <span>TURBO</span>
+            <span>//</span>
+            <span>DRIFT</span>
+            <span>//</span>
+            <span>NITRO</span>
+            <span>//</span>
+            <span>TURBO</span>
+            <span>//</span>
+        </div>
+    </div>
+
+    <section class="grid-3x2">
+        <div class="grid-item">
+            <span class="grid-num">01</span>
+            <span class="grid-label">Hyper Cars</span>
+        </div>
+        <div class="grid-item">
+            <span class="grid-num">02</span>
+            <span class="grid-label">Custom Tuning</span>
+        </div>
+        <div class="grid-item">
+            <span class="grid-num">03</span>
+            <span class="grid-label">Online PvP</span>
+        </div>
+        <div class="grid-item">
+            <span class="grid-num">04</span>
+            <span class="grid-label">50+ Tracks</span>
+        </div>
+        <div class="grid-item">
+            <span class="grid-num">05</span>
+            <span class="grid-label">Real Physics</span>
+        </div>
+        <div class="grid-item">
+            <span class="grid-num">06</span>
+            <span class="grid-label">Daily Events</span>
+        </div>
+    </section>
+
+    <section class="text-section">
+        <p>BREAK EVERY<br><span class="highlight">RECORD</span>. DESTROY<br>EVERY RIVAL.</p>
+    </section>
+
+    <section class="cars-section">
+        <div class="section-header">
+            <h2 class="section-title">Garage</h2>
+            <span class="car-count">100+ CARS</span>
+        </div>
+        <div class="cars-grid">
+            <div class="car-card">
+                <div class="car-name">Phantom X</div>
+                <div class="car-spec">
+                    <span>Speed: 280</span>
+                    <span>Acceleration: 85</span>
+                </div>
+            </div>
+            <div class="car-card">
+                <div class="car-name">Viper GT</div>
+                <div class="car-spec">
+                    <span>Speed: 295</span>
+                    <span>Acceleration: 92</span>
+                </div>
+            </div>
+            <div class="car-card">
+                <div class="car-name">Falcon R</div>
+                <div class="car-spec">
+                    <span>Speed: 310</span>
+                    <span>Acceleration: 88</span>
+                </div>
+            </div>
+            <div class="car-card">
+                <div class="car-name">Thunder Z</div>
+                <div class="car-spec">
+                    <span>Speed: 340</span>
+                    <span>Acceleration: 95</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="stat-box">
+            <div class="stat-value">100+</div>
+            <div class="stat-label">Super Cars</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value">50</div>
+            <div class="stat-label">Tracks</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value">10M</div>
+            <div class="stat-label">Players</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-value">99%</div>
+            <div class="stat-label">Rating</div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Game</h4>
+                <a href="#">Download</a>
+                <a href="#">Updates</a>
+                <a href="#">DLC</a>
+            </div>
+            <div class="footer-col">
+                <h4>Community</h4>
+                <a href="#">Clubs</a>
+                <a href="#">Events</a>
+                <a href="#">Leaderboards</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="#">Help Center</a>
+                <a href="#">Report Bug</a>
+                <a href="#">Feedback</a>
+            </div>
+            <div class="footer-col">
+                <h4>Social</h4>
+                <a href="#">Twitter</a>
+                <a href="#">YouTube</a>
+                <a href="#">Discord</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2024 VELOCITY GAMES</span>
+            <span>PRIVACY / TERMS / RATING: E</span>
+        </div>
+    </footer>
+</body>
+</html>

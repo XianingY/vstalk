@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Neue Form - Swiss Modernism Museum</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f5f5f5;
+      --text: #111111;
+      --muted: #555555;
+      --accent: #e11d48;
+      --grid: rgba(0, 0, 0, 0.08);
+      --font-heading: "Archivo", sans-serif;
+      --font-body: "Source Sans 3", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 36px 24px 90px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+    }
+
+    .rule {
+      border-top: 2px solid var(--text);
+      margin: 18px 0 32px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+    }
+
+    h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.8rem, 5vw, 4.8rem);
+      margin: 0;
+      grid-column: span 7;
+    }
+
+    .hero-meta {
+      grid-column: span 5;
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .poster {
+      grid-column: span 4;
+      background: white;
+      border: 2px solid var(--text);
+      padding: 18px;
+      min-height: 220px;
+    }
+
+    .poster strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+
+    .poster .accent {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .line-item {
+      border-top: 1px solid var(--grid);
+      padding-top: 12px;
+      margin-top: 12px;
+      font-size: 0.95rem;
+    }
+
+    .reveal {
+      animation: gridRise 0.6s ease-out both;
+      animation-delay: var(--d, 0s);
+    }
+
+    @keyframes gridRise {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 900px) {
+      h1,
+      .hero-meta,
+      .poster {
+        grid-column: span 12;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="reveal" style="--d: 0.05s;">
+      <span>Neue Form Museum</span>
+      <span>Zurich</span>
+    </header>
+    <div class="rule"></div>
+
+    <section class="grid">
+      <h1 class="reveal" style="--d: 0.1s;">Systems of Order: The Swiss Grid Reimagined.</h1>
+      <div class="hero-meta reveal" style="--d: 0.15s;">
+        <p>New exhibition tracing typographic discipline across architecture, maps, and editorial culture. Featuring 120 artifacts.</p>
+        <p><strong>Opening:</strong> Oct 12 | 10:00</p>
+      </div>
+
+      <article class="poster reveal" style="--d: 0.2s;">
+        <strong>Program</strong>
+        <div class="line-item"><span class="accent">10:30</span> Guided tour | Modernist signage</div>
+        <div class="line-item"><span class="accent">13:00</span> Talk | Grid as language</div>
+        <div class="line-item"><span class="accent">16:30</span> Workshop | Precision layouts</div>
+      </article>
+
+      <article class="poster reveal" style="--d: 0.25s;">
+        <strong>Highlights</strong>
+        <div class="line-item">Max Bill posters (1952)</div>
+        <div class="line-item">Zurich transit maps archive</div>
+        <div class="line-item">Interactive typographic lab</div>
+      </article>
+
+      <article class="poster reveal" style="--d: 0.3s;">
+        <strong>Tickets</strong>
+        <div class="line-item">Adults | 18 CHF</div>
+        <div class="line-item">Students | 8 CHF</div>
+        <div class="line-item"><span class="accent">Free</span> | Sundays</div>
+      </article>
+    </section>
+  </div>
+</body>
+</html>

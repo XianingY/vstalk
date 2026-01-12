@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NOIR WAVE - Exaggerated Minimal Editorial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f9f7f3;
+      --text: #0b0b0b;
+      --accent: #ff6b00;
+      --muted: #4b4b4b;
+      --line: #e6e0d8;
+      --font-heading: "Bodoni Moda", serif;
+      --font-body: "Work Sans", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--text);
+      background: repeating-linear-gradient(
+        90deg,
+        transparent 0,
+        transparent 48px,
+        rgba(0, 0, 0, 0.03) 48px,
+        rgba(0, 0, 0, 0.03) 49px
+      ),
+      var(--bg);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--text);
+      padding-bottom: 12px;
+      margin-bottom: 40px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 12px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 28px;
+      align-items: end;
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(3.5rem, 9vw, 9rem);
+      margin: 0;
+      line-height: 0.9;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .accent {
+      color: var(--accent);
+    }
+
+    .hero-cta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .btn {
+      border: 2px solid var(--text);
+      padding: 12px 18px;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      background: var(--text);
+      color: var(--bg);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+    }
+
+    .section {
+      margin-top: 64px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      border-top: 2px solid var(--text);
+      padding-top: 12px;
+    }
+
+    .card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      margin: 0 0 10px;
+    }
+
+    .reveal {
+      animation: glideUp 0.7s ease-out both;
+      animation-delay: var(--d, 0s);
+    }
+
+    @keyframes glideUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar reveal" style="--d: 0.05s;">
+      <span>Noir Wave Journal</span>
+      <span>Issue 07</span>
+    </div>
+
+    <section class="hero">
+      <div class="reveal" style="--d: 0.1s;">
+        <h1>FORM <span class="accent">FOLLOWS</span> FEELING</h1>
+      </div>
+      <div class="reveal" style="--d: 0.2s;">
+        <p>An editorial studio distilling the loudest fashion movements into clean, oversized stories. One hero image. One headline. Nothing extra.</p>
+        <div class="hero-cta">
+          <button class="btn">View the edition</button>
+          <button class="btn btn-ghost">Subscribe</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <article class="card reveal" style="--d: 0.15s;">
+        <h3>Silhouette</h3>
+        <p>Architected drape. Monochrome tailoring. Hard lines and soft movement.</p>
+      </article>
+      <article class="card reveal" style="--d: 0.25s;">
+        <h3>Material</h3>
+        <p>Matte textures with a single metallic accent. Nothing else competes.</p>
+      </article>
+      <article class="card reveal" style="--d: 0.35s;">
+        <h3>Runway Notes</h3>
+        <p>Short-form breakdowns for stylists, buyers, and art directors.</p>
+      </article>
+    </section>
+  </div>
+</body>
+</html>

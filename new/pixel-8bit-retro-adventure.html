@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>8-BIT QUEST - 复古冒险</title>
+    <style>
+        @font-face {
+            font-family: 'Press Start';
+            src: local('Courier New');
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #1a1a2e;
+            --text-color: #f8f8f8;
+            --accent-1: #ff6b6b;
+            --accent-2: #4ecdc4;
+            --accent-3: #ffe66d;
+            --accent-4: #95e1d3;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            image-rendering: pixelated;
+            overflow-x: hidden;
+        }
+
+        /* CRT SCANLINE EFFECT */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* HEADER */
+        header {
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 4px solid var(--text-color);
+        }
+
+        .logo-pixel {
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-shadow:
+                4px 4px 0 var(--accent-1),
+                -1px -1px 0 var(--accent-2);
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 24px;
+            font-size: 12px;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .stat-icon {
+            width: 16px;
+            height: 16px;
+            background: var(--accent-3);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 24px;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: clamp(24px, 8vw, 72px);
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.2;
+            margin-bottom: 32px;
+            text-transform: uppercase;
+            animation: titleFlicker 0.1s infinite;
+        }
+
+        @keyframes titleFlicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.98; }
+        }
+
+        .hero-title span {
+            display: block;
+        }
+
+        .title-main {
+            color: var(--accent-2);
+            text-shadow:
+                8px 8px 0 var(--accent-1),
+                -4px -4px 0 var(--accent-4);
+        }
+
+        .title-sub {
+            color: var(--accent-3);
+            text-shadow: 4px 4px 0 #000;
+        }
+
+        /* PIXEL ART HERO IMAGE */
+        .hero-scene {
+            width: 100%;
+            max-width: 600px;
+            height: 200px;
+            background: linear-gradient(180deg, #16213e 0%, #1a1a2e 50%, #0f3460 100%);
+            position: relative;
+            margin-bottom: 48px;
+            overflow: hidden;
+            border: 4px solid var(--text-color);
+        }
+
+        /* Create pixel mountains */
+        .mountain {
+            position: absolute;
+            bottom: 40px;
+            width: 0;
+            height: 0;
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-bottom: 80px solid #2d3a5a;
+        }
+
+        .mountain:nth-child(1) { left: 40px; }
+        .mountain:nth-child(2) { left: 160px; border-bottom-color: #3d4a6a; }
+        .mountain:nth-child(3) { left: 280px; }
+        .mountain:nth-child(4) { left: 400px; border-bottom-color: #2d3a5a; }
+
+        /* Pixel character */
+        .pixel-hero {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 48px;
+            height: 64px;
+            background: var(--accent-1);
+            animation: heroBounce 0.5s ease-in-out infinite;
+        }
+
+        .pixel-hero::before {
+            content: '';
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 24px;
+            background: var(--accent-3);
+            border-radius: 50%;
+        }
+
+        @keyframes heroBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-8px); }
+        }
+
+        /* Clouds */
+        .cloud {
+            position: absolute;
+            width: 64px;
+            height: 24px;
+            background: #2d3a5a;
+        }
+
+        .cloud:nth-child(5) { top: 40px; left: 80px; animation: cloudMove 8s linear infinite; }
+        .cloud:nth-child(6) { top: 60px; left: 400px; animation: cloudMove 10s linear infinite; }
+
+        @keyframes cloudMove {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(700px); }
+        }
+
+        /* BLINKING CURSOR TEXT */
+        .blink-text {
+            font-size: 18px;
+            text-align: center;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .start-prompt {
+            margin-top: 16px;
+            padding: 16px 32px;
+            background: var(--accent-4);
+            color: var(--bg-color);
+            font-size: 14px;
+            font-weight: bold;
+            animation: promptPulse 0.8s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes promptPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* CHARACTER SELECT */
+        .char-select {
+            padding: 64px 24px;
+            background: #0f3460;
+            border-top: 4px solid var(--text-color);
+        }
+
+        .section-title {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 48px;
+            color: var(--accent-3);
+            text-shadow: 4px 4px 0 #000;
+        }
+
+        .chars {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .char-card {
+            width: 100px;
+            height: 120px;
+            background: var(--bg-color);
+            border: 4px solid var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .char-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 8px 8px 0 var(--text-color);
+        }
+
+        .char-sprite {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 8px;
+        }
+
+        .char-name {
+            font-size: 10px;
+            text-transform: uppercase;
+        }
+
+        /* FEATURES GRID */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0;
+            border: 4px solid var(--text-color);
+            margin: 64px 24px;
+        }
+
+        .feature {
+            padding: 32px;
+            border: 2px solid var(--text-color);
+            text-align: center;
+        }
+
+        .feature:nth-child(1) { background: var(--accent-1); }
+        .feature:nth-child(2) { background: var(--accent-2); color: var(--bg-color); }
+        .feature:nth-child(3) { background: var(--accent-3); color: var(--bg-color); }
+        .feature:nth-child(4) { background: var(--accent-4); color: var(--bg-color); }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            image-rendering: pixelated;
+        }
+
+        .feature h3 {
+            font-size: 14px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .feature p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* HIGH SCORES */
+        .scores {
+            padding: 64px 24px;
+            background: var(--bg-color);
+            border-top: 4px solid var(--text-color);
+        }
+
+        .score-board {
+            max-width: 400px;
+            margin: 0 auto;
+            border: 4px solid var(--accent-3);
+            background: #16213e;
+        }
+
+        .score-header {
+            background: var(--accent-3);
+            color: var(--bg-color);
+            padding: 16px;
+            font-size: 18px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .score-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 24px;
+            border-bottom: 2px solid var(--text-color);
+            font-size: 14px;
+        }
+
+        .score-row:last-child {
+            border-bottom: none;
+        }
+
+        .rank {
+            color: var(--accent-1);
+            font-weight: bold;
+        }
+
+        .points {
+            color: var(--accent-2);
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 32px 24px;
+            background: #000;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .esrb {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--accent-3);
+            color: #000;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .header-stats { display: none; }
+            .chars { gap: 16px; }
+            .char-card { width: 80px; height: 100px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-pixel">▓▒░ 8-BIT QUEST ░▒▓</div>
+        <div class="header-stats">
+            <div class="stat"><div class="stat-icon"></div> LVL: 99</div>
+            <div class="stat"><div class="stat-icon"></div> HP: 999</div>
+            <div class="stat"><div class="stat-icon"></div> COINS: 99999</div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1 class="hero-title">
+            <span class="title-main">DRAGON</span>
+            <span class="title-sub">QUEST</span>
+        </h1>
+
+        <div class="hero-scene">
+            <div class="cloud"></div>
+            <div class="cloud"></div>
+            <div class="mountain"></div>
+            <div class="mountain"></div>
+            <div class="mountain"></div>
+            <div class="mountain"></div>
+            <div class="pixel-hero"></div>
+        </div>
+
+        <p class="blink-text">◆ INSERT COIN TO START ◆</p>
+        <div class="start-prompt">PRESS START</div>
+    </section>
+
+    <section class="char-select">
+        <h2 class="section-title">◇ SELECT YOUR HERO ◇</h2>
+        <div class="chars">
+            <div class="char-card">
+                <div class="char-sprite" style="background: var(--accent-1);"></div>
+                <span class="char-name">WARRIOR</span>
+            </div>
+            <div class="char-card">
+                <div class="char-sprite" style="background: var(--accent-2);"></div>
+                <span class="char-name">MAGE</span>
+            </div>
+            <div class="char-card">
+                <div class="char-sprite" style="background: var(--accent-3);"></div>
+                <span class="char-name">ROGUE</span>
+            </div>
+            <div class="char-card">
+                <div class="char-sprite" style="background: var(--accent-4);"></div>
+                <span class="char-name">HEALER</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <div class="feature-icon">⚔️</div>
+            <h3>战斗系统</h3>
+            <p>回合制经典战斗</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🗺️</div>
+            <h3>开放世界</h3>
+            <p>探索8-bit大陆</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🐉</div>
+            <h3>龙类宠物</h3>
+            <p>收集稀有龙族</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🏰</div>
+            <h3>城堡建设</h3>
+            <p>打造你的王国</p>
+        </div>
+    </section>
+
+    <section class="scores">
+        <h2 class="section-title">◇ HIGH SCORES ◇</h2>
+        <div class="score-board">
+            <div class="score-header">RANK SCORE NAME</div>
+            <div class="score-row">
+                <span class="rank">1ST</span>
+                <span class="points">999,999</span>
+                <span>PLAYER1</span>
+            </div>
+            <div class="score-row">
+                <span class="rank">2ND</span>
+                <span class="points">888,888</span>
+                <span>GAMER</span>
+            </div>
+            <div class="score-row">
+                <span class="rank">3RD</span>
+                <span class="points">777,777</span>
+                <span>RETRO</span>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="esrb">E - EVERYONE</div>
+        <p>© 2024 PIXEL GAMES STUDIO</p>
+        <p>8-BIT QUEST IS A REGISTERED TRADEMARK</p>
+    </footer>
+</body>
+</html>

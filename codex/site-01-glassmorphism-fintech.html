@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AstraVault - Glassmorphism Fintech</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f172a;
+      --bg-2: #0b1222;
+      --primary: #f59e0b;
+      --secondary: #fbbf24;
+      --cta: #8b5cf6;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: rgba(148, 163, 184, 0.2);
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-strong: rgba(255, 255, 255, 0.12);
+      --shadow: 0 20px 60px rgba(15, 23, 42, 0.45);
+      --radius: 18px;
+      --font-heading: "Space Grotesk", sans-serif;
+      --font-body: "DM Sans", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--text);
+      background: radial-gradient(1200px 600px at 15% 20%, rgba(139, 92, 246, 0.25), transparent 60%),
+        radial-gradient(900px 500px at 85% 15%, rgba(245, 158, 11, 0.2), transparent 55%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px 24px 80px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 20px;
+      z-index: 5;
+    }
+
+    .nav .brand {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      letter-spacing: 0.2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .btn {
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(120deg, var(--primary), var(--cta));
+      color: #0b1120;
+      box-shadow: 0 12px 30px rgba(139, 92, 246, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 32px;
+      align-items: center;
+      margin-top: 48px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.6rem, 4vw, 4rem);
+      margin: 0 0 16px;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .glass-card {
+      padding: 22px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--glass-strong);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .stat {
+      padding: 16px;
+      border-radius: 14px;
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .stat strong {
+      font-size: 1.4rem;
+      display: block;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .features {
+      margin-top: 64px;
+    }
+
+    .features h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      margin-bottom: 18px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .feature-card {
+      padding: 18px;
+      border-radius: 16px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border 0.2s ease, transform 0.2s ease;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(248, 250, 252, 0.4);
+      transform: translateY(-4px);
+    }
+
+    .feature-card svg {
+      width: 28px;
+      height: 28px;
+      margin-bottom: 12px;
+    }
+
+    .reveal {
+      animation: fadeUp 0.8s ease-out both;
+      animation-delay: var(--d, 0s);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-links {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        animation: none;
+      }
+
+      .btn {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav reveal" style="--d: 0.1s;">
+      <div class="brand">AstraVault</div>
+      <div class="nav-links">
+        <a href="#security">Security</a>
+        <a href="#insights">Insights</a>
+        <a href="#pricing">Pricing</a>
+      </div>
+      <button class="btn btn-primary">Get Early Access</button>
+    </nav>
+
+    <section class="hero">
+      <div class="reveal" style="--d: 0.2s;">
+        <h1>Predictive finance, wrapped in crystal clarity.</h1>
+        <p>Launch your treasury stack with real-time risk modeling, smart cash routing, and auditable compliance in one glass-smooth workspace.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary">Start free trial</button>
+          <button class="btn btn-ghost">View demo</button>
+        </div>
+        <div class="stat-grid">
+          <div class="stat">
+            <strong>98.6%</strong>
+            <span class="muted">Model accuracy</span>
+          </div>
+          <div class="stat">
+            <strong>12 hrs</strong>
+            <span class="muted">Faster audits</span>
+          </div>
+          <div class="stat">
+            <strong>$4.2B</strong>
+            <span class="muted">Assets protected</span>
+          </div>
+        </div>
+      </div>
+      <div class="glass-card reveal" style="--d: 0.35s;">
+        <h3>Liquidity Command Center</h3>
+        <p>Balanced portfolio heatmap, anomaly alerts, and impact forecasts live in one translucent console.</p>
+        <div class="stat-grid">
+          <div class="stat">
+            <strong>+18%</strong>
+            <span class="muted">Yield optimized</span>
+          </div>
+          <div class="stat">
+            <strong>24/7</strong>
+            <span class="muted">Monitoring</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="security">
+      <h2 class="reveal" style="--d: 0.1s;">Designed for trust-first teams</h2>
+      <div class="feature-grid">
+        <article class="feature-card reveal" style="--d: 0.2s;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M12 3l7 4v5c0 4.5-3 7-7 9-4-2-7-4.5-7-9V7l7-4z" />
+            <path d="M9 12l2 2 4-4" />
+          </svg>
+          <h4>Zero-trust vaults</h4>
+          <p>Segmented access with instant revocation, backed by tamper-proof logs.</p>
+        </article>
+        <article class="feature-card reveal" style="--d: 0.3s;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M4 12h16" />
+            <path d="M12 4v16" />
+            <circle cx="12" cy="12" r="9" />
+          </svg>
+          <h4>Scenario engines</h4>
+          <p>Stress-test every move with layered simulations and multi-market overlays.</p>
+        </article>
+        <article class="feature-card reveal" style="--d: 0.4s;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <path d="M4 18h16" />
+            <path d="M6 16V8l6-4 6 4v8" />
+            <path d="M9 18v-6h6v6" />
+          </svg>
+          <h4>Instant compliance</h4>
+          <p>Generate regulatory-ready packets with data lineage baked in.</p>
+        </article>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

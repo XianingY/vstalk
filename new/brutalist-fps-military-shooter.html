@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TACTICAL // 战术行动</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --olive: #4a5d23;
+            --tan: #c4a574;
+            --dark: #0f0f0f;
+            --light: #fafafa;
+            --red: #ff3333;
+            --yellow: #ffcc00;
+        }
+
+        body {
+            font-family: 'Arial Black', 'Helvetica Neue', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1;
+            overflow-x: hidden;
+        }
+
+        /* HEADER - MILITARY STYLE */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 48px;
+            z-index: 100;
+            background: var(--olive);
+            border-bottom: 4px solid var(--tan);
+        }
+
+        .emblem {
+            width: 60px;
+            height: 60px;
+            background: var(--tan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--dark);
+        }
+
+        .logo {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            color: var(--light);
+        }
+
+        nav {
+            display: flex;
+            gap: 24px;
+        }
+
+        nav a {
+            font-size: 11px;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--light);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 8px 16px;
+            border: 2px solid var(--tan);
+        }
+
+        nav a:hover {
+            background: var(--tan);
+            color: var(--dark);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 120px 48px 48px;
+            position: relative;
+            background:
+                repeating-linear-gradient(
+                    45deg,
+                    var(--dark) 0px,
+                    var(--dark) 20px,
+                    #1a1a1a 20px,
+                    #1a1a1a 40px
+                );
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 14vw, 12rem);
+            font-weight: 900;
+            line-height: 0.85;
+            letter-spacing: -0.06em;
+        }
+
+        .hero-title .line-1 {
+            display: block;
+            color: var(--olive);
+        }
+
+        .hero-title .line-2 {
+            display: block;
+            color: var(--tan);
+        }
+
+        .hero-title .line-3 {
+            display: block;
+            color: var(--red);
+        }
+
+        .hero-tagline {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            margin-top: 32px;
+            padding: 16px 32px;
+            background: var(--red);
+            color: var(--light);
+            display: inline-block;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* STATS BAR */
+        .stats-bar {
+            display: flex;
+            gap: 0;
+            margin-top: 64px;
+            border: 4px solid var(--light);
+        }
+
+        .stat {
+            flex: 1;
+            padding: 24px;
+            text-align: center;
+            border-right: 4px solid var(--light);
+            background: var(--dark);
+        }
+
+        .stat:last-child {
+            border-right: none;
+        }
+
+        .stat-value {
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-weight: 900;
+            color: var(--yellow);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 8px;
+            color: #888;
+        }
+
+        /* CTA */
+        .cta-row {
+            display: flex;
+            gap: 24px;
+            margin-top: 64px;
+        }
+
+        .cta-primary {
+            padding: 24px 56px;
+            background: var(--olive);
+            color: var(--light);
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: 900;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 4px solid var(--tan);
+            transition: all 0.15s;
+        }
+
+        .cta-primary:hover {
+            background: var(--tan);
+            color: var(--dark);
+        }
+
+        .cta-secondary {
+            padding: 24px 56px;
+            background: transparent;
+            color: var(--light);
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: 900;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 4px solid var(--light);
+            transition: all 0.15s;
+        }
+
+        .cta-secondary:hover {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        /* SECTIONS */
+        .section-dark {
+            background: var(--dark);
+            padding: 100px 48px;
+        }
+
+        .section-olive {
+            background: var(--olive);
+            padding: 100px 48px;
+            border-top: 4px solid var(--tan);
+            border-bottom: 4px solid var(--tan);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 6vw, 5rem);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            margin-bottom: 48px;
+        }
+
+        .section-dark .section-title { color: var(--light); }
+        .section-olive .section-title { color: var(--tan); }
+
+        /* MAP GRID */
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .map-item {
+            aspect-ratio: 4/3;
+            background: var(--olive);
+            border: 4px solid var(--tan);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-item::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 10px,
+                rgba(0,0,0,0.1) 10px,
+                rgba(0,0,0,0.1) 20px
+            );
+        }
+
+        .map-name {
+            font-size: 24px;
+            font-weight: 900;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .map-mode {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 8px;
+            position: relative;
+        }
+
+        /* WEAPONS */
+        .weapons-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            border: 4px solid var(--tan);
+        }
+
+        .weapon {
+            padding: 32px;
+            text-align: center;
+            border-right: 4px solid var(--tan);
+            background: var(--dark);
+            transition: all 0.2s;
+        }
+
+        .weapon:last-child {
+            border-right: none;
+        }
+
+        .weapon:hover {
+            background: var(--olive);
+        }
+
+        .weapon-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .weapon-name {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* INFO BANNER */
+        .info-banner {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+        }
+
+        .info-box {
+            padding: 48px;
+            text-align: center;
+            border: 4px solid var(--light);
+        }
+
+        .info-box:nth-child(1) { background: var(--red); }
+        .info-box:nth-child(2) { background: var(--yellow); color: var(--dark); }
+        .info-box:nth-child(3) { background: var(--olive); }
+
+        .info-num {
+            font-size: 64px;
+            font-weight: 900;
+        }
+
+        .info-box:nth-child(1) .info-num { color: var(--light); }
+        .info-box:nth-child(2) .info-num { color: var(--dark); }
+        .info-box:nth-child(3) .info-num { color: var(--tan); }
+
+        .info-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 8px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark);
+            color: var(--light);
+            padding: 64px 48px;
+            border-top: 4px solid var(--olive);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+        }
+
+        .footer-brand h3 {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .footer-col h4 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+            color: #666;
+        }
+
+        .footer-col a {
+            display: block;
+            font-size: 14px;
+            color: var(--light);
+            text-decoration: none;
+            margin-bottom: 8px;
+        }
+
+        .footer-col a:hover {
+            color: var(--olive);
+        }
+
+        .footer-bottom {
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 16px 24px; flex-wrap: wrap; gap: 12px; }
+            nav { width: 100%; justify-content: center; }
+            .hero { padding: 140px 24px 24px; }
+            .stats-bar { flex-wrap: wrap; }
+            .stat { flex: 1 0 50%; border-right: none; border-bottom: 4px solid var(--light); }
+            .cta-row { flex-direction: column; }
+            .map-grid { grid-template-columns: 1fr; }
+            .weapons-grid { grid-template-columns: repeat(2, 1fr); }
+            .weapon { border-right: none; border-bottom: 4px solid var(--tan); }
+            .info-banner { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="emblem">T</div>
+        <div class="logo">TACTICAL OPS</div>
+        <nav>
+            <a href="#">CAMPAIGN</a>
+            <a href="#">MULTIPLAYER</a>
+            <a href="#">MAPS</a>
+            <a href="#">WEAPONS</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1 class="hero-title">
+            <span class="line-1">TACTICAL</span>
+            <span class="line-2">COMBAT</span>
+            <span class="line-3">ELITE</span>
+        </h1>
+        <div class="hero-tagline">◆ CLASSIFIED OPERATION ◆</div>
+
+        <div class="stats-bar">
+            <div class="stat">
+                <div class="stat-value">50+</div>
+                <div class="stat-label">Weapons</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">20</div>
+                <div class="stat-label">Maps</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">10</div>
+                <div class="stat-label">Modes</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">128</div>
+                <div class="stat-label">Players</div>
+            </div>
+        </div>
+
+        <div class="cta-row">
+            <a href="#" class="cta-primary">Deploy Now</a>
+            <a href="#" class="cta-secondary">Watch Trailer</a>
+        </div>
+    </section>
+
+    <section class="section-olive">
+        <h2 class="section-title">Mission Maps</h2>
+        <div class="map-grid">
+            <div class="map-item">
+                <div class="map-name">Desert Storm</div>
+                <div class="map-mode">Team Deathmatch</div>
+            </div>
+            <div class="map-item">
+                <div class="map-name">Urban Warfare</div>
+                <div class="map-mode">Capture The Flag</div>
+            </div>
+            <div class="map-item">
+                <div class="map-name">Jungle Ops</div>
+                <div class="map-mode">Search & Destroy</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-dark">
+        <h2 class="section-title">Arsenal</h2>
+        <div class="weapons-grid">
+            <div class="weapon">
+                <div class="weapon-icon">🔫</div>
+                <div class="weapon-name">Assault Rifles</div>
+            </div>
+            <div class="weapon">
+                <div class="weapon-icon">🔪</div>
+                <div class="weapon-name">Melee</div>
+            </div>
+            <div class="weapon">
+                <div class="weapon-icon">💣</div>
+                <div class="weapon-name">Explosives</div>
+            </div>
+            <div class="weapon">
+                <div class="weapon-icon">🎯</div>
+                <div class="weapon-name">Sniper</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="info-banner">
+        <div class="info-box">
+            <div class="info-num">1M+</div>
+            <div class="info-label">Players</div>
+        </div>
+        <div class="info-box">
+            <div class="info-num">99%</div>
+            <div class="info-label">Rating</div>
+        </div>
+        <div class="info-box">
+            <div class="info-num">24/7</div>
+            <div class="info-label">Servers</div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>TACTICAL OPS</h3>
+                <p>Experience the most authentic military first-person shooter. Realistic ballistics. Tactical gameplay. Pure action.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Game</h4>
+                <a href="#">Buy</a>
+                <a href="#">Demo</a>
+                <a href="#">Patches</a>
+            </div>
+            <div class="footer-col">
+                <h4>Community</h4>
+                <a href="#">Forums</a>
+                <a href="#">Clans</a>
+                <a href="#">Events</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="#">Help</a>
+                <a href="#">Bugs</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2024 MILITARY GAMES INC.</span>
+            <span>RATING: MATURE 17+</span>
+        </div>
+    </footer>
+</body>
+</html>

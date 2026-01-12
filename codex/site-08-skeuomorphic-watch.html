@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Marrow & Steel - Skeuomorphic Watch Atelier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #2a1f1a;
+      --leather: #3a2a22;
+      --text: #f8f4ee;
+      --muted: #d1c4b3;
+      --gold: #c9a227;
+      --bronze: #8b6b3f;
+      --shadow: rgba(0, 0, 0, 0.45);
+      --font-heading: "Cinzel", serif;
+      --font-body: "Source Serif 4", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--text);
+      background: linear-gradient(135deg, rgba(58, 42, 34, 0.9), rgba(25, 18, 14, 0.95)),
+        repeating-linear-gradient(45deg, var(--leather) 0, var(--leather) 6px, #2f221c 6px, #2f221c 12px);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 36px 24px 84px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 12px;
+    }
+
+    header nav {
+      display: flex;
+      gap: 18px;
+    }
+
+    header a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    header a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.6rem, 4vw, 3.8rem);
+      margin: 0 0 14px;
+    }
+
+    .hero p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .bevel {
+      padding: 14px 20px;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: linear-gradient(180deg, #3f2f24, #2b1e18);
+      box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.2), inset 0 -4px 6px rgba(0, 0, 0, 0.5),
+        0 12px 30px var(--shadow);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .showcase {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 24px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .dial {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      margin: 0 auto 18px;
+      background: radial-gradient(circle at 30% 30%, #f4e2b9, #c9a227 60%, #6b4f2e 100%);
+      box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.4), 0 10px 18px rgba(0, 0, 0, 0.45);
+      position: relative;
+    }
+
+    .dial:before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, #f7f2e9, #d8c7b0 65%);
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .spec-grid {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .spec {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(58, 42, 34, 0.7);
+    }
+
+    .spec strong {
+      color: var(--gold);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .reveal {
+      animation: warmIn 0.8s ease-out both;
+      animation-delay: var(--d, 0s);
+    }
+
+    @keyframes warmIn {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="reveal" style="--d: 0.05s;">
+      <span>Marrow & Steel</span>
+      <nav>
+        <a href="#collection">Collection</a>
+        <a href="#atelier">Atelier</a>
+        <a href="#heritage">Heritage</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="reveal" style="--d: 0.1s;">
+        <h1>Heirloom timepieces sculpted in bronze, leather, and moonlight.</h1>
+        <p>Each watch is assembled by hand, tuned to a slow heartbeat. A tactile ritual for collectors who value weight and detail.</p>
+        <button class="bevel">Book a private showing</button>
+      </div>
+      <div class="showcase reveal" style="--d: 0.2s;">
+        <div class="dial" aria-hidden="true"></div>
+        <p style="text-align: center; color: var(--muted);">Calibre 1937 | 42mm | 31 jewels</p>
+      </div>
+    </section>
+
+    <section class="spec-grid" id="collection">
+      <div class="spec reveal" style="--d: 0.25s;">
+        <strong>Cathedral Dial</strong>
+        Brushed brass with hand-etched indices.
+      </div>
+      <div class="spec reveal" style="--d: 0.3s;">
+        <strong>Strap</strong>
+        Vegetable-tanned leather with waxed edge.
+      </div>
+      <div class="spec reveal" style="--d: 0.35s;">
+        <strong>Movement</strong>
+        60-hour reserve with silent rotor.
+      </div>
+    </section>
+  </div>
+</body>
+</html>

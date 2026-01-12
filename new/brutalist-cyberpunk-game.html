@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS // 赛博朋克</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --neon-pink: #ff00ff;
+            --neon-cyan: #00ffff;
+            --dark: #0a0a0a;
+            --light: #fafafa;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.1;
+            overflow-x: hidden;
+        }
+
+        /* BRUTALIST HEADER */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 24px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            mix-blend-mode: difference;
+        }
+
+        .logo {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            color: var(--light);
+        }
+
+        nav a {
+            display: inline-block;
+            margin-left: 32px;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--light);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* HERO - MASSIVE TYPOGRAPHY */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 120px 48px 48px;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: clamp(4rem, 18vw, 16rem);
+            font-weight: 900;
+            line-height: 0.85;
+            letter-spacing: -0.06em;
+            margin-bottom: 24px;
+        }
+
+        .hero-title .line-1 {
+            display: block;
+            color: var(--dark);
+        }
+
+        .hero-title .line-2 {
+            display: block;
+            color: var(--neon-pink);
+            -webkit-text-stroke: 2px var(--neon-pink);
+        }
+
+        .hero-title .line-3 {
+            display: block;
+            color: transparent;
+            -webkit-text-stroke: 2px var(--dark);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-weight: 400;
+            max-width: 600px;
+            margin-bottom: 48px;
+            letter-spacing: 0.05em;
+        }
+
+        /* GIANT CTA BUTTON */
+        .cta-giant {
+            display: inline-block;
+            padding: 32px 64px;
+            background: var(--neon-pink);
+            color: var(--light);
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            font-weight: 900;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: transform 0.15s ease;
+        }
+
+        .cta-giant:hover {
+            transform: translate(-8px, -8px);
+            box-shadow: 8px 8px 0 var(--dark);
+        }
+
+        /* MARQUEE */
+        .marquee {
+            background: var(--dark);
+            color: var(--light);
+            padding: 24px 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+
+        .marquee-content span {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            margin-right: 48px;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* GRID SECTION */
+        .grid-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+        }
+
+        .grid-item {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 48px;
+            border: 1px solid var(--dark);
+            transition: all 0.2s ease;
+        }
+
+        .grid-item:nth-child(1) { background: var(--neon-cyan); }
+        .grid-item:nth-child(2) { background: var(--light); }
+        .grid-item:nth-child(3) { background: var(--neon-pink); }
+        .grid-item:nth-child(4) { background: var(--dark); color: var(--light); }
+        .grid-item:nth-child(5) { background: var(--light); }
+        .grid-item:nth-child(6) { background: #ff6b00; }
+
+        .grid-item:hover {
+            transform: scale(0.98);
+        }
+
+        .grid-number {
+            font-size: 80px;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .grid-label {
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* BIG TEXT SECTION */
+        .big-text {
+            padding: 160px 48px;
+            background: var(--dark);
+            color: var(--light);
+        }
+
+        .big-text p {
+            font-size: clamp(2rem, 5vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+        }
+
+        /* IMAGE COLLAGE */
+        .collage {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 0;
+        }
+
+        .collage-main {
+            aspect-ratio: 4/5;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-pink));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 200px;
+        }
+
+        .collage-side {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .collage-side-item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            border-left: 1px solid var(--dark);
+        }
+
+        .collage-side-item:nth-child(1) { background: var(--light); }
+        .collage-side-item:nth-child(2) { background: #ff6b00; }
+
+        /* FOOTER */
+        footer {
+            background: var(--dark);
+            color: var(--light);
+            padding: 80px 48px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 48px;
+        }
+
+        .footer-col h4 {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+            opacity: 0.6;
+        }
+
+        .footer-col a {
+            display: block;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+            margin-bottom: 12px;
+            transition: opacity 0.2s;
+        }
+
+        .footer-col a:hover {
+            opacity: 0.6;
+        }
+
+        .footer-bottom {
+            margin-top: 80px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 100px 24px 24px; }
+            .grid-section { grid-template-columns: 1fr; }
+            .collage { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            header { padding: 16px 24px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">NEXUS</div>
+        <nav>
+            <a href="#">About</a>
+            <a href="#">Features</a>
+            <a href="#">Download</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1 class="hero-title">
+            <span class="line-1">NEXUS</span>
+            <span class="line-2">PROTOCOL</span>
+            <span class="line-3">2077</span>
+        </h1>
+        <p class="hero-subtitle">
+            赛博朋克开放世界射击游戏。<br>
+            侵入系统。解放AI。终结控制。
+        </p>
+        <a href="#" class="cta-giant">进入黑市 →</a>
+    </section>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            <span>NEON CITY</span>
+            <span>//</span>
+            <span>CYBERNETICS</span>
+            <span>//</span>
+            <span>REBELLION</span>
+            <span>//</span>
+            <span>NEON CITY</span>
+            <span>//</span>
+            <span>CYBERNETICS</span>
+            <span>//</span>
+            <span>REBELLION</span>
+            <span>//</span>
+        </div>
+    </div>
+
+    <section class="grid-section">
+        <div class="grid-item">
+            <span class="grid-number">01</span>
+            <span class="grid-label">开放世界</span>
+        </div>
+        <div class="grid-item">
+            <span class="grid-number">02</span>
+            <span class="grid-label">自定义义体</span>
+        </div>
+        <div class="grid-item">
+            <span class="grid-number">03</span>
+            <span class="grid-label">在线对战</span>
+        </div>
+        <div class="grid-item">
+            <span class="grid-number">04</span>
+            <span class="grid-label">剧情任务</span>
+        </div>
+        <div class="grid-item">
+            <span class="grid-number">05</span>
+            <span class="grid-label">装备系统</span>
+        </div>
+        <div class="grid-item">
+            <span class="grid-number">06</span>
+            <span class="grid-label">排行榜</span>
+        </div>
+    </section>
+
+    <section class="big-text">
+        <p>在代码与血肉的边界，<br>你必须做出选择。</p>
+    </section>
+
+    <div class="collage">
+        <div class="collage-main">🎮</div>
+        <div class="collage-side">
+            <div class="collage-side-item">🔫</div>
+            <div class="collage-side-item">🤖</div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>游戏</h4>
+                <a href="#">下载</a>
+                <a href="#">更新</a>
+                <a href="#">DLC</a>
+            </div>
+            <div class="footer-col">
+                <h4>社区</h4>
+                <a href="#">论坛</a>
+                <a href="#">Discord</a>
+                <a href="#">赛事</a>
+            </div>
+            <div class="footer-col">
+                <h4>支持</h4>
+                <a href="#">帮助</a>
+                <a href="#">反馈</a>
+                <a href="#">联系</a>
+            </div>
+            <div class="footer-col">
+                <h4>社交</h4>
+                <a href="#">Twitter</a>
+                <a href="#">YouTube</a>
+                <a href="#">TikTok</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2024 NEXUS STUDIOS</span>
+            <span>PRIVACY / TERMS</span>
+        </div>
+    </footer>
+</body>
+</html>

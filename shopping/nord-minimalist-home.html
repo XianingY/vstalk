@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NORD · 北欧极简</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --white: #ffffff;
+            --off-white: #f8f8f8;
+            --gray-100: #f0f0f0;
+            --gray-200: #e0e0e0;
+            --gray-300: #c0c0c0;
+            --gray-600: #606060;
+            --gray-800: #303030;
+            --black: #1a1a1a;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* HEADER - MINIMAL */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 48px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            color: var(--black);
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+        }
+
+        nav a {
+            font-size: 13px;
+            font-weight: 500;
+            text-decoration: none;
+            color: var(--gray-600);
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--black);
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 24px;
+            font-size: 18px;
+        }
+
+        .header-icon {
+            cursor: pointer;
+            color: var(--gray-600);
+            transition: color 0.2s;
+        }
+
+        .header-icon:hover {
+            color: var(--black);
+        }
+
+        /* HERO - SPACIOUS */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 48px 60px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero-tagline {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gray-600);
+            margin-bottom: 24px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 32px;
+            letter-spacing: -0.02em;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--gray-600);
+            margin-bottom: 48px;
+            max-width: 480px;
+        }
+
+        .btn-outline {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            border: 1px solid var(--black);
+            background: transparent;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: var(--black);
+        }
+
+        .btn-outline:hover {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .hero-image {
+            flex: 1;
+            height: 70vh;
+            background: var(--off-white);
+            margin-left: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 200px;
+            color: var(--gray-200);
+        }
+
+        /* CATEGORIES - CLEAN */
+        .categories {
+            padding: 120px 48px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 64px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .view-all {
+            font-size: 13px;
+            color: var(--gray-600);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .view-all:hover {
+            color: var(--black);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .category-card {
+            text-decoration: none;
+            color: var(--black);
+            transition: transform 0.3s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .category-image {
+            aspect-ratio: 3/4;
+            background: var(--off-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        .category-name {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .category-count {
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+
+        /* PRODUCTS - MINIMAL CARDS */
+        .products {
+            padding: 120px 48px;
+            background: var(--off-white);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            cursor: pointer;
+        }
+
+        .product-image {
+            aspect-ratio: 1;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            margin-bottom: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::after {
+            content: 'QUICK VIEW';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.95);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-align: center;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-image::after {
+            transform: translateY(0);
+        }
+
+        .product-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .product-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .product-desc {
+            font-size: 13px;
+            color: var(--gray-600);
+            margin-bottom: 8px;
+        }
+
+        .product-price {
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* FEATURES */
+        .features {
+            padding: 120px 48px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 80px;
+        }
+
+        .feature {
+            text-align: center;
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 24px;
+            opacity: 0.8;
+        }
+
+        .feature h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .feature p {
+            font-size: 14px;
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        /* NEWSLETTER - CLEAN */
+        .newsletter {
+            padding: 120px 48px;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .newsletter p {
+            font-size: 14px;
+            color: var(--gray-600);
+            margin-bottom: 40px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--gray-300);
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 16px 0;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .newsletter-form input::placeholder {
+            color: var(--gray-300);
+        }
+
+        .newsletter-form button {
+            padding: 16px 24px;
+            background: transparent;
+            border: none;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--black);
+            transition: color 0.2s;
+        }
+
+        .newsletter-form button:hover {
+            color: var(--gray-600);
+        }
+
+        /* FOOTER - MINIMAL */
+        footer {
+            padding: 80px 48px;
+            background: var(--off-white);
+        }
+
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 80px;
+        }
+
+        .footer-brand h3 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            color: var(--gray-600);
+            max-width: 280px;
+        }
+
+        .footer-col h4 {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+            color: var(--gray-600);
+        }
+
+        .footer-col a {
+            display: block;
+            font-size: 14px;
+            color: var(--black);
+            text-decoration: none;
+            margin-bottom: 12px;
+            transition: color 0.2s;
+        }
+
+        .footer-col a:hover {
+            color: var(--gray-600);
+        }
+
+        .footer-bottom {
+            max-width: 1600px;
+            margin: 80px auto 0;
+            padding-top: 32px;
+            border-top: 1px solid var(--gray-200);
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--gray-600);
+        }
+
+        @media (max-width: 1024px) {
+            .hero {
+                flex-direction: column;
+                padding: 120px 24px 60px;
+            }
+            .hero-image {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 48px;
+                height: 400px;
+            }
+            .category-grid, .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .features {
+                grid-template-columns: 1fr;
+                gap: 48px;
+            }
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 16px 24px; }
+            nav { display: none; }
+            .hero { padding: 100px 24px 40px; }
+            .hero h1 { font-size: 2rem; }
+            .categories, .products, .newsletter { padding: 80px 24px; }
+            .category-grid, .product-grid { gap: 24px; }
+            .section-header { flex-direction: column; gap: 16px; align-items: flex-start; }
+            .footer-content { grid-template-columns: 1fr; gap: 40px; }
+            .footer-bottom { flex-direction: column; gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">NORD</div>
+        <nav>
+            <a href="#">新品</a>
+            <a href="#">家具</a>
+            <a href="#">灯具</a>
+            <a href="#">装饰</a>
+            <a href="#">织物</a>
+        </nav>
+        <div class="header-icons">
+            <span class="header-icon">🔍</span>
+            <span class="header-icon">♡</span>
+            <span class="header-icon">🛒</span>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-tagline">Scandinavian Design</div>
+            <h1>简约生活<br>品质之选</h1>
+            <p>源自北欧的极简美学，为你的家居空间注入温暖与宁静。我们相信，好的设计应该是简洁、实用且经得起时间考验的。</p>
+            <a href="#" class="btn-outline">
+                浏览全部 →
+            </a>
+        </div>
+        <div class="hero-image">🪑</div>
+    </section>
+
+    <section class="categories">
+        <div class="section-header">
+            <h2 class="section-title">精选分类</h2>
+            <a href="#" class="view-all">
+                查看全部 →
+            </a>
+        </div>
+        <div class="category-grid">
+            <a href="#" class="category-card">
+                <div class="category-image">🛋️</div>
+                <div class="category-name">客厅家具</div>
+                <div class="category-count">24 件商品</div>
+            </a>
+            <a href="#" class="category-card">
+                <div class="category-image">💡</div>
+                <div class="category-name">灯具照明</div>
+                <div class="category-count">18 件商品</div>
+            </a>
+            <a href="#" class="category-card">
+                <div class="category-image">🖼️</div>
+                <div class="category-name">墙面装饰</div>
+                <div class="category-count">32 件商品</div>
+            </a>
+            <a href="#" class="category-card">
+                <div class="category-image">🧶</div>
+                <div class="category-name">布艺织物</div>
+                <div class="category-count">45 件商品</div>
+            </a>
+        </div>
+    </section>
+
+    <section class="products">
+        <div class="section-header">
+            <h2 class="section-title">热销产品</h2>
+            <a href="#" class="view-all">
+                查看全部 →
+            </a>
+        </div>
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image">🪑</div>
+                <div class="product-info">
+                    <div>
+                        <div class="product-name">奥斯陆休闲椅</div>
+                        <div class="product-desc">橡木 / 棉麻布艺</div>
+                    </div>
+                    <div class="product-price">¥2,980</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">🛋️</div>
+                <div class="product-info">
+                    <div>
+                        <div class="product-name">斯德哥尔摩三人沙发</div>
+                        <div class="product-desc">灰色 / 绒布面料</div>
+                    </div>
+                    <div class="product-price">¥8,990</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">🪴</div>
+                <div class="product-info">
+                    <div>
+                        <div class="product-name">赫尔辛基花盆</div>
+                        <div class="product-desc">手工陶瓷 / 哑光白</div>
+                    </div>
+                    <div class="product-price">¥580</div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">🕰️</div>
+                <div class="product-info">
+                    <div>
+                        <div class="product-name">哥本哈根挂钟</div>
+                        <div class="product-desc">白蜡木 / 简约设计</div>
+                    </div>
+                    <div class="product-price">¥890</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature">
+            <div class="feature-icon">🌿</div>
+            <h3>天然材质</h3>
+            <p>甄选实木、天然棉麻等可持续材料，每一件产品都经过严格环保认证。</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">✋</div>
+            <h3>手工制作</h3>
+            <p>坚持传统工艺与现代设计相结合，每一件产品都承载着匠人的用心。</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🚚</div>
+            <h3>免费配送</h3>
+            <p>订单满 ¥999 免费送货上门，专业团队提供安装服务。</p>
+        </div>
+    </section>
+
+    <section class="newsletter">
+        <h2>订阅资讯</h2>
+        <p>获取最新设计灵感、促销活动和独家优惠</p>
+        <div class="newsletter-form">
+            <input type="email" placeholder="输入您的邮箱地址">
+            <button>订阅</button>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>NORD</h3>
+                <p>北欧极简设计品牌，致力于为现代家庭提供简约、实用、美观的家居产品。</p>
+            </div>
+            <div class="footer-col">
+                <h4>购物</h4>
+                <a href="#">所有商品</a>
+                <a href="#">新品上架</a>
+                <a href="#">热销榜单</a>
+            </div>
+            <div class="footer-col">
+                <h4>服务</h4>
+                <a href="#">配送说明</a>
+                <a href="#">退换政策</a>
+                <a href="#">安装指南</a>
+            </div>
+            <div class="footer-col">
+                <h4>关于</h4>
+                <a href="#">品牌故事</a>
+                <a href="#">线下门店</a>
+                <a href="#">联系我们</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>© 2024 NORD DESIGN</span>
+            <span>隐私政策 / 使用条款</span>
+        </div>
+    </footer>
+</body>
+</html>

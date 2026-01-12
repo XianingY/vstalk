@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RAW PULSE - Brutalist Zine</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red: #ff0000;
+      --blue: #0000ff;
+      --yellow: #ffff00;
+      --black: #000000;
+      --white: #ffffff;
+      --font-heading: "Archivo Black", sans-serif;
+      --font-body: "IBM Plex Mono", monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      color: var(--black);
+      background: var(--white);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .block {
+      border: 4px solid var(--black);
+      padding: 18px;
+      background: var(--white);
+    }
+
+    .hero {
+      grid-column: span 2;
+      background: var(--yellow);
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      margin: 0 0 12px;
+      text-transform: uppercase;
+    }
+
+    .tag {
+      display: inline-block;
+      background: var(--blue);
+      color: var(--white);
+      padding: 6px 12px;
+      font-weight: 600;
+    }
+
+    .cta {
+      background: var(--red);
+      color: var(--white);
+      padding: 12px 16px;
+      display: inline-block;
+      margin-top: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: none;
+    }
+
+    .cta:hover {
+      background: var(--black);
+    }
+
+    .manifesto {
+      background: var(--blue);
+      color: var(--white);
+    }
+
+    .list {
+      padding-left: 18px;
+      line-height: 1.6;
+    }
+
+    .issue {
+      display: flex;
+      justify-content: space-between;
+      border-top: 4px solid var(--black);
+      padding-top: 12px;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    .reveal {
+      animation: punchIn 0.2s steps(2) both;
+      animation-delay: var(--d, 0s);
+    }
+
+    @keyframes punchIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 780px) {
+      .hero {
+        grid-column: span 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="grid">
+      <section class="block hero reveal" style="--d: 0.05s;">
+        <span class="tag">Issue 24</span>
+        <h1>RAW PULSE</h1>
+        <p>Anti-design journal for rogue typography, underground art, and noisy futures.</p>
+        <a class="cta" href="#subscribe">Subscribe Today</a>
+      </section>
+
+      <section class="block manifesto reveal" style="--d: 0.1s;">
+        <h2>Manifesto</h2>
+        <ul class="list">
+          <li>No polish. No gloss. Pure signal.</li>
+          <li>We print the raw edges.</li>
+          <li>Every issue funds a local artist.</li>
+        </ul>
+      </section>
+
+      <section class="block reveal" style="--d: 0.15s;">
+        <h2>Featured Drops</h2>
+        <div class="issue">
+          <span>Concrete Collage</span>
+          <span>Pg. 12</span>
+        </div>
+        <div class="issue">
+          <span>Rebel Type Labs</span>
+          <span>Pg. 32</span>
+        </div>
+        <div class="issue">
+          <span>Noise City Maps</span>
+          <span>Pg. 47</span>
+        </div>
+      </section>
+
+      <section class="block reveal" style="--d: 0.2s;">
+        <h2>Upcoming Events</h2>
+        <p>Open studio nights, live print sessions, and DIY poster walls.</p>
+        <a href="#events">Get the calendar</a>
+      </section>
+
+      <section class="block reveal" style="--d: 0.25s;">
+        <h2>Shop the Zine</h2>
+        <p>Hand-bound runs, risograph posters, and noise mixtapes.</p>
+        <a href="#shop">Enter shop</a>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
